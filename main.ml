@@ -103,7 +103,7 @@ let read_headerfile filename =
   in
   let header_width =
     List.fold_left 
-      (fun w line -> max (String.length line) w)  
+      (fun w line -> max (UTF8.length line) w)  
       0
       header
   in

@@ -65,7 +65,7 @@ let arg_int args ?default name =
 
 let arg_char args ?default name =
   let s = arg_string args ?default name in
-  if String.length s = 1 then s.[0]
+  if UTF8.length s = 1 then s.[0]
   else raise (Error (sprintf "parameter %s expects a character" name))
 
     
@@ -103,7 +103,7 @@ let make_frame ~open_comment ~close_comment ~line_char ~margin ~width =
       output_string oc open_comment;
       output_string oc margin;
       output_string oc string;
-      output oc white 0 (max 0 (real_width - String.length string));
+      output oc white 0 (max 0 (real_width - UTF8.length string));
       output_string oc margin;
       output_string oc close_comment;
       output_char oc '\n'
@@ -150,7 +150,7 @@ let make_lines ~open_comment ~close_comment ~line_char ~begin_line
 	while
           let s = input_line ic in
             not (Str.string_match regexp_end s
-                   (max 0 (String.length s - end_length)))
+                   (max 0 (UTF8.length s - end_length)))
         do () done;
 	""
       end

@@ -10,6 +10,8 @@ OCAMLDEP=@OCAMLDEP@
 OCAMLYACC=@OCAMLYACC@
 OCAMLLEX=@OCAMLLEX@
 
+OCAMLC_FLAGS=-I +extlib extLib.cma
+
 # Installation directory
 INSTALLDIR=@INSTALLDIR@
 
@@ -51,10 +53,10 @@ depend: $(GENERATED)
 	$(OCAMLDEP) *.ml *.mli > Depend
 
 headache: $(CMO)
-	ocamlc -o $@ unix.cma str.cma $^
+	ocamlc -o $@ unix.cma str.cma -I +extlib extLib.cma $^
 
 mkconfig: $(MKCONFIG.CMO)
-	ocamlc -o $@ unix.cma str.cma $^
+	ocamlc -o $@ unix.cma str.cma -I +extlib extLib.cma $^
 
 config_builtin.ml: config_builtin mkconfig
 	./mkconfig
