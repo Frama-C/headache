@@ -15,6 +15,7 @@
 
 (* $Id: model.ml,v 1.2 2003/11/13 16:08:44 simonet Exp $ *)
 
+open CamomileLibrary
 open Printf
 
 exception Error of string
@@ -29,7 +30,7 @@ let string_length s =
 type generator =
     { remove: in_channel -> string;
       create: out_channel -> string list -> int -> unit;
-    } 
+    }
 
 (***************************************************************************)
 (** {2 Models} *)

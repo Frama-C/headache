@@ -15,6 +15,7 @@
 
 (* $Id: main.ml,v 1.2 2003/11/13 16:08:44 simonet Exp $ *)
 
+open CamomileLibrary
 open Printf
 open Config_builtin
 
@@ -103,7 +104,7 @@ let read_headerfile filename =
   in
   let header_width =
     List.fold_left 
-      (fun w line -> max (Model.string_length line) w)
+      (fun w line -> max (Model.string_length line) w)  
       0
       header
   in
