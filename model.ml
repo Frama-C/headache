@@ -26,7 +26,7 @@ exception Error of string
 
 type generator =
     { remove: in_channel -> string;
-      create: out_channel -> string list -> unit;
+      create: out_channel -> string list -> int -> unit;
     } 
 
 (***************************************************************************)
@@ -92,8 +92,9 @@ let make_frame ~open_comment ~close_comment ~line_char ~margin ~width =
       ""
   in
 
-  let create oc header =
-    let width' = width + 2 * String.length margin in
+  let create oc header header_width =
+    let real_width = max width header_width in
+    let width' = real_width + 2 * String.length margin in
     let white = String.make width' ' ' in
     let line = String.make width' line_char in
     Printf.fprintf oc "%s%s%s\n" open_comment line close_comment;
@@ -102,7 +103,7 @@ let make_frame ~open_comment ~close_comment ~line_char ~margin ~width =
       output_string oc open_comment;
       output_string oc margin;
       output_string oc string;
-      output oc white 0 (max 0 (width - String.length string));
+      output oc white 0 (max 0 (real_width - String.length string));
       output_string oc margin;
       output_string oc close_comment;
       output_char oc '\n'
@@ -160,9 +161,10 @@ let make_lines ~open_comment ~close_comment ~line_char ~begin_line
       ""
   in
 
-  let create oc header =
+  let create oc header header_width =
+    let real_width = max width header_width in
     Printf.fprintf oc "%s%s\n" open_comment 
-      (String.make (max 0 (width - String.length open_comment)) line_char);
+      (String.make (max 0 (real_width - String.length open_comment)) line_char);
     
     List.iter (function string ->
       output_string oc begin_line;
@@ -172,7 +174,7 @@ let make_lines ~open_comment ~close_comment ~line_char ~begin_line
 
     Printf.fprintf oc "%s%s%s\n\n" 
       begin_last
-      (String.make (max 0 (width - String.length begin_last
+      (String.make (max 0 (real_width - String.length begin_last
 			     - String.length close_comment)) line_char)
       close_comment;
 
@@ -198,7 +200,7 @@ let _ =
 let make_no () =
 
   { remove = (fun _ -> "");
-    create = (fun _ _ -> ())
+    create = (fun _ _ _ -> ())
   } 
 
 let _ =

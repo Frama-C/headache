@@ -98,9 +98,16 @@ let read_headerfile filename =
     with
       End_of_file -> close_in ic; []
   in
-  loop ()
-
-
+  let header = 
+    loop ()
+  in
+  let header_width =
+    List.fold_left 
+      (fun w line -> max (String.length line) w)  
+      0
+      header
+  in
+    header, header_width
 
 (***************************************************************************)
 (** {2 Processing files} *)
@@ -151,14 +158,14 @@ let copy ic oc =
   in
   loop ()
 
-let create_header header filename =
+let create_header header header_width filename =
   let generator = find_generator filename in
   let skip_lst = find_skips filename in
   pipe_file (fun ic oc ->
     let () = Skip.skip skip_lst ic oc in
     let line = generator.Model.remove ic in
     let () = Skip.skip skip_lst ic oc in
-    generator.Model.create oc header;
+    generator.Model.create oc header header_width;
     output_string oc line;
     copy ic oc
   ) filename
@@ -184,24 +191,24 @@ let remove_header filename =
 (** {2 Main loop} *)
 
 type action =
-    Create of string list
+    Create of string list * int
   | Remove
 
 
 let main () =
 
-  let action = ref (Create []) in
+  let action = ref (Create ([], 0)) in
 
   let anonymous filename =
     match !action with
-      Create header -> create_header header filename
+      Create (header, header_width) -> create_header header header_width filename
     | Remove -> remove_header filename
   in
 
   Arg.parse [
 
   "-h",
-  Arg.String (fun s -> action := Create (read_headerfile s)),
+  Arg.String (fun s -> let (header, header_width) = (read_headerfile s) in action := Create (header, header_width)),
   "<file>  Create headers with text from <file>";
 
   "-c",
