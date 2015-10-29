@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD><TITLE>headache</TITLE>
+
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<META name="GENERATOR" content="hevea 1.07">
+</HEAD>
+<BODY >
+<!--HEVEA command line is: hevea manual.tex -->
+<!--HTMLHEAD-->
+<!--ENDHTML-->
+<!--PREFIX <ARG ></ARG>-->
+<!--CUT DEF section 1 -->
+
+
+<H1 ALIGN=center><TT>headache</TT></H1>
+
+<H3 ALIGN=center>Vincent Simonet</H3>
+
+<H3 ALIGN=center>November, 2002</H3>
+This manual is also available in <A HREF="manual.txt">plain text</A>,
+<A HREF="manual.ps.gz">PostScript</A> and <A HREF="manual.pdf">PDF</A>.<BR>
+<BR>
+<!--TOC section Overview-->
+
+<H2><A NAME="htoc1">1</A>&nbsp;&nbsp;Overview</H2><!--SEC END -->
+
+It is a common usage to put at the beginning of source code files a
+short header giving, for instance, some copyright informations.
+<TT>headache</TT> is a simple and lightweight tool for managing easily these
+headers. Among its functionalities, one may mention:
+<UL><LI>
+Headers must generally be generated as <EM>comments</EM> in source
+ code files. <TT>headache</TT> deals with different files types and generates
+ for each of them headers in an appropriate format.
+<LI>Headers automatically detects existing headers and removes them.
+ Thus, you can use it to update headers in a set of files.
+</UL>
+<TT>headache</TT> is distributed under the terms of the <EM>GNU Library
+ General Public License</EM>. See file <CODE>LICENSE</CODE> of the
+distribution for more information.<BR>
+<BR>
+<!--TOC section Compilation and installation-->
+
+<H2><A NAME="htoc2">2</A>&nbsp;&nbsp;Compilation and installation</H2><!--SEC END -->
+
+Building <TT>headache</TT> requires <EM>Objective Caml</EM> (version 3.06 or up,
+available at <TT>http://caml.inria.fr/</TT>) and <EM>GNU Make</EM>. <BR>
+<BR>
+<!--TOC paragraph Instructions-->
+
+<H5>Instructions</H5><!--SEC END -->
+
+<OL type=1><LI>
+Configure the system. From the source directory, do:
+<PRE>
+  ./configure
+</PRE>
+This generates the <CODE>Makefile</CODE> in the source directory. The
+software is installed by default in <CODE>/usr/local/bin</CODE>. This path
+is customizable thanks to the <CODE>--bindir</CODE> option.<BR>
+<BR>
+<LI>Build the executable. From the source directory, do:
+<PRE>
+  make
+</PRE> 
+ This builds an executable named <TT>headache</TT>. <BR>
+<BR>
+<LI>In order to install it in the directory specified during
+ configuration, as a superuser, do:
+<PRE>
+  make install
+</PRE>
+</OL>
+<!--TOC section Usage-->
+
+<H2><A NAME="htoc3">3</A>&nbsp;&nbsp;Usage</H2><!--SEC END -->
+
+Let us illustrate the use of this tool with a small example. Assume
+you have a small project mixing C and Caml code consisting in three
+files <CODE>foo.c</CODE>, <CODE>bar.ml</CODE> and <CODE>bar.mli'</CODE>, and you want to
+equip them with some header. First of all, write a <EM>header
+ file</EM>, i.e. a plain text file including the information headers
+must mention. An example of such a file is given in
+figure&nbsp;<A HREF="#figure:header">1</A>. In the following, we assume this file is
+named <CODE>myheader</CODE> and is in the same directory as source files.<BR>
+<BR>
+Then, in order to generate headers, just run the command:
+<PRE>
+  headache -h myheader foo.c bar.ml bar.mli
+</PRE>
+Each file is equipped with an header including the text given in the
+header file <CODE>myheader</CODE>, surrounded by some extra characters
+depending on its format making it a comment (e.g. <CODE>(*</CODE> and
+<CODE>*)</CODE> in <CODE>.ml</CODE> files). If you update informations in the
+header file <CODE>myheader</CODE>, you simply need to re-run the above
+command to update headers in source code files: existing ones are
+automatically removed.<BR>
+<BR>
+Similarly, running:
+<PRE>
+  headache -r foo.c bar.ml bar.mli
+</PRE>
+removes any existing in files <CODE>foo.c</CODE>, <CODE>bar.ml</CODE> and
+<CODE>bar.mli</CODE>. Files which do not have a header are kept unchanged.
+<BLOCKQUOTE><DIV ALIGN=center><HR WIDTH="80%" SIZE=2></DIV>
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLPADDING=1 CELLSPACING=0>
+<TR><TD ALIGN="left"><PRE>
+                             Headache
+               Automatic generation of files headers
+
+        Vincent Simonet, Projet Cristal, INRIA Rocquencourt
+
+Copyright 2002 
+Institut National de Recherche en Informatique et en Automatique.
+All rights reserved.  This file is distributed under the terms of
+the GNU Library General Public License.
+
+Vincent.Simonet@inria.fr           http://cristal.inria.fr/~simonet/
+</PRE></TD>
+</TR></TABLE></DIV>
+ <BR>
+<DIV ALIGN=center>Figure 1: An example of header file</DIV><BR>
+
+ <A NAME="figure:header"></A>
+<DIV ALIGN=center><HR WIDTH="80%" SIZE=2></DIV></BLOCKQUOTE>
+<!--TOC section Configuration file-->
+
+<H2><A NAME="htoc4">4</A>&nbsp;&nbsp;Configuration file</H2><!--SEC END -->
+
+File types and format of header may be specified by a
+<EM>configuration file</EM>. By default, the default builtin
+configuration file given in figure&nbsp;<A HREF="#figure:config">2</A> is used. You
+can also use your own configuration file thanks to the <CODE>-c</CODE>
+option:
+<PRE>
+  headache -c myconfig -h myheader foo.c bar.ml bar.mli
+</PRE>
+In order to write your own configuration, you can follow the example
+given in figure&nbsp;<A HREF="#figure:config">2</A>. A configuration file consists in
+a list of <EM>entries</EM> separated by the character <CODE>|</CODE>. Each
+of them is made of two parts separated by an <CODE>-&gt;</CODE>:
+<UL><LI>
+The first one is a <EM>regular expression</EM>. (Regular
+ expression are enclosed within double quotes and have the same
+ syntax as in Gnu Emacs.) <TT>headache</TT> determines file types according to
+ file basenames; thus, each file is dealt with using the first line
+ its name matches.
+<LI>The second one describes the format of headers for files of this
+ type. It consists of the name of a <EM>model</EM> (e.g. 
+ <CODE>frame</CODE>), possibly followed by a list of arguments. Arguments
+ are named: <CODE>open:"(*"</CODE> means that the value of the argument
+ <CODE>open</CODE> is <CODE>(*</CODE>.
+</UL>
+<TT>headache</TT> currently supports three <EM>models</EM>:
+<UL><LI>
+<CODE>frame</CODE>. With this model, headers are generated in a
+ frame. This model requires three arguments: <CODE>open</CODE> and
+ <CODE>close</CODE> (the opening and closing sequences for comments) and
+ <CODE>line</CODE> (the character used to make the horizontal lines of the
+ frame). Two optional arguments may be used <CODE>margin</CODE> (a string
+ printed between the left and right side of the frame and the border,
+ by default two spaces) and <CODE>width</CODE> (the width of the inside of
+ the frame, default is 68).
+<LI><CODE>lines</CODE>. Headers are typeset between two lines. Three
+ arguments must be provided: <CODE>open</CODE> and <CODE>close</CODE> (the
+ opening and closing sequences for comments), <CODE>line</CODE> (the
+ character used to make the horizontal lines). Three optional
+ arguments are allowd: <CODE>begin</CODE> (a string typeset at the
+ beginning of each line, by default two spaces), <CODE>last</CODE> (a
+ string typeset at the beginning of the last line) and <CODE>width</CODE>
+ (the width of the lines, default is 70).
+<LI><CODE>no</CODE>. This model generates no header and has no argument.
+</UL>
+It is possible to change the default builtin configuration file at
+compile time. For this, just edit the file <CODE>config_builtin</CODE>
+present in the source distribution before building the software.
+<BLOCKQUOTE><DIV ALIGN=center><HR WIDTH="80%" SIZE=2></DIV>
+<DIV ALIGN=center>
+<TABLE BORDER=1 CELLPADDING=1 CELLSPACING=0>
+<TR><TD ALIGN="left"><PRE>
+# Objective Caml source 
+  ".*\\.ml[il]?" -&gt; frame open:"(*" line:"*" close:"*)"
+| ".*\\.mly"     -&gt; frame open:"/*" line:"*" close:"*/"
+# C source
+| ".*\\.[ch]"    -&gt; frame open:"/*" line:"*" close:"*/"
+# Misc
+| ".*Makefile.*" -&gt; frame open:"#"  line:"#" close:"#"
+| ".*README.*"   -&gt; frame open:"*"  line:"*" close:"*"
+| ".*LICENSE.*"  -&gt; frame open:"*"  line:"*" close:"*"
+</PRE></TD>
+</TR></TABLE></DIV>
+ <BR>
+<DIV ALIGN=center>Figure 2: The default builtin configuration file</DIV><BR>
+
+ <A NAME="figure:config"></A>
+<DIV ALIGN=center><HR WIDTH="80%" SIZE=2></DIV></BLOCKQUOTE>
+<!--HTMLFOOT-->
+<!--ENDHTML-->
+<!--FOOTER-->
+<HR SIZE=2>
+<BLOCKQUOTE><EM>This document was translated from L<sup>A</sup>T<sub>E</sub>X by
+</EM><A HREF="http://pauillac.inria.fr/~maranget/hevea/index.html"><EM>H<FONT SIZE=2><sup>E</sup></FONT>V<FONT SIZE=2><sup>E</sup></FONT>A</EM></A><EM>.
+</EM></BLOCKQUOTE>
+</BODY>
+</HTML>
