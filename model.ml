@@ -26,10 +26,8 @@ exception Error of string
 
 type generator =
     { remove: in_channel -> string;
-      create: out_channel -> string list -> unit
+      create: out_channel -> string list -> unit;
     } 
-
-
 
 (***************************************************************************)
 (** {2 Models} *)

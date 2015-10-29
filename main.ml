@@ -25,13 +25,17 @@ open Config_builtin
 
 let generators : (Str.regexp * Model.generator) list ref = ref []
 
+let skips : (Str.regexp * Skip.regexp_skip) list ref = ref []
+
 let read_configfile filename =
   let ic = open_in filename in
   let lexbuf = Lexing.from_channel ic in
   try
-    generators := 
+    let (config_generators, config_skips) =
       (Config_parse.configfile Config_lex.token lexbuf)
-      @ !generators;
+    in
+    skips := config_skips @ !skips;
+    generators := config_generators @ !generators;
     close_in ic
   with
     Config.Error (msg, loc1, loc2) ->
@@ -43,8 +47,6 @@ let read_configfile filename =
       eprintf "%s: Configuration file %s, syntax error at characters %d-%d:\n"
 	Sys.argv.(0)
 	filename (Lexing.lexeme_start lexbuf) (Lexing.lexeme_end lexbuf)
-
-
 
 let find_generator filename =
   let basename = Filename.basename filename in
@@ -60,6 +62,11 @@ let find_generator filename =
       eprintf "%s: No generator found found for file %s\n"
 	Sys.argv.(0) filename;
       exit 2
+
+let find_skips filename = 
+  List.filter
+    (fun (rg_filename, _) -> Str.string_match rg_filename filename 0)
+    !skips
 
 
 
@@ -144,12 +151,13 @@ let copy ic oc =
   in
   loop ()
 
-
-
 let create_header header filename =
   let generator = find_generator filename in
+  let skip_lst = find_skips filename in
   pipe_file (fun ic oc ->
+    let () = Skip.skip skip_lst ic oc in
     let line = generator.Model.remove ic in
+    let () = Skip.skip skip_lst ic oc in
     generator.Model.create oc header;
     output_string oc line;
     copy ic oc
@@ -159,8 +167,11 @@ let create_header header filename =
 
 let remove_header filename =
   let generator = find_generator filename in
+  let skip_lst = find_skips filename in
   pipe_file (fun ic oc ->
+    let () = Skip.skip skip_lst ic oc in
     let line = generator.Model.remove ic in
+    let () = Skip.skip skip_lst ic oc in
     output_string oc line;
     copy ic oc
   ) filename

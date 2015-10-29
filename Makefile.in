@@ -15,9 +15,9 @@ INSTALLDIR=@INSTALLDIR@
 
 GENERATED= config_parse.mli config_parse.ml config_lex.ml config_builtin.ml
 
-MKCONFIG.CU=model config config_parse config_lex mkconfig
+MKCONFIG.CU=skip model config config_parse config_lex mkconfig
 MKCONFIG.CMO=$(MKCONFIG.CU:%=%.cmo)
-CU=info model config config_parse config_lex config_builtin main
+CU=info skip model config config_parse config_lex config_builtin main
 CMO=$(CU:%=%.cmo)
 
 
@@ -81,4 +81,4 @@ config_builtin.ml: config_builtin mkconfig
 		$(OCAMLYACC) -v $<
 
 
-include Depend
+-include Depend
