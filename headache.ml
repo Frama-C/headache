@@ -145,7 +145,7 @@ let pipe_file f filename =
 
 let copy ic oc =
   let len = 256 in
-  let buf = String.create len in
+  let buf = Bytes.create len in
   let rec loop () =
     let i = input ic buf 0 len in
     if i > 0 then begin
