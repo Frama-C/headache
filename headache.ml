@@ -113,8 +113,6 @@ let read_headerfile filename =
 (***************************************************************************)
 (** {2 Processing files} *)
 
-external random_seed: unit -> int = "sys_random_seed"
-
 let temp_file_counter = ref 0
 let prng = Random.State.make_self_init ();;
 
