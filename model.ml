@@ -138,6 +138,8 @@ let make_lines ~open_comment ~close_comment ~line_char ~begin_line
   let regexp_end = 
     Str.regexp_string (sprintf "%s%s" (String.make 10 line_char) close_comment)
   in
+  let end_length = 10 + String.length close_comment
+  in
 
   let regexp_blank = Str.regexp "^[ ]*$" in
 
@@ -146,7 +148,11 @@ let make_lines ~open_comment ~close_comment ~line_char ~begin_line
       let line = input_line ic in
       if Str.string_match regexp_begin line 0
       then begin
-	while not (Str.string_match regexp_end (input_line ic) 0) do () done;
+	while
+          let s = input_line ic in
+            not (Str.string_match regexp_end s
+                   (max 0 (String.length s - end_length)))
+        do () done;
 	""
       end
       else if Str.string_match regexp_blank line 0 

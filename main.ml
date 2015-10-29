@@ -89,7 +89,7 @@ let read_headerfile filename =
       let line = input_line ic in
       line :: loop ()
     with
-      End_of_file -> []
+      End_of_file -> close_in ic; []
   in
   loop ()
 
@@ -221,4 +221,4 @@ let () =
     main ()
   with
     Sys_error msg ->
-      eprintf "%s: %s" Sys.argv.(0) msg
+      eprintf "%s: %s\n" Sys.argv.(0) msg
