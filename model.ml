@@ -19,7 +19,9 @@ open Printf
 
 exception Error of string
 
-
+let string_length s =
+  try UTF8.validate s; UTF8.length s
+  with UTF8.Malformed_code -> String.length s
 
 (***************************************************************************)
 (** {2 Headers generators} *)
@@ -65,7 +67,7 @@ let arg_int args ?default name =
 
 let arg_char args ?default name =
   let s = arg_string args ?default name in
-  if UTF8.length s = 1 then s.[0]
+  if string_length s = 1 then s.[0]
   else raise (Error (sprintf "parameter %s expects a character" name))
 
     
@@ -103,7 +105,7 @@ let make_frame ~open_comment ~close_comment ~line_char ~margin ~width =
       output_string oc open_comment;
       output_string oc margin;
       output_string oc string;
-      output oc white 0 (max 0 (real_width - UTF8.length string));
+      output oc white 0 (max 0 (real_width - string_length string));
       output_string oc margin;
       output_string oc close_comment;
       output_char oc '\n'
@@ -150,7 +152,7 @@ let make_lines ~open_comment ~close_comment ~line_char ~begin_line
 	while
           let s = input_line ic in
             not (Str.string_match regexp_end s
-                   (max 0 (UTF8.length s - end_length)))
+                   (max 0 (string_length s - end_length)))
         do () done;
 	""
       end
