@@ -4,6 +4,7 @@
 | ".*\\.fml[i]?" -> frame open:"(*" line:"*" close:"*)"
 | ".*\\.mly"     -> frame open:"/*" line:"*" close:"*/"
 | ".*\\.[ch]"    -> frame open:"/*" line:"*" close:"*/"
+| ".*\\.tex"     -> frame open:"%"  line:"%" close:"%"
 | ".*Makefile.*" -> frame open:"#"  line:"#" close:"#"
 | ".*README.*"   -> frame open:"*"  line:"*" close:"*"
 | ".*LICENSE.*"  -> frame open:"*"  line:"*" close:"*"
