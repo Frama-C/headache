@@ -50,7 +50,7 @@ let read_configfile filename =
 let find_generator filename =
   let basename = Filename.basename filename in
   try
-    let _, generator = 
+    let _, generator =
       List.find (function regexp, _ ->
 	Str.string_match regexp basename 0
       ) (! generators)
@@ -58,11 +58,11 @@ let find_generator filename =
     generator
   with
     Not_found ->
-      eprintf "%s: No generator found found for file %s\n"
+      eprintf "%s: No generator found for file %s\n"
 	Sys.argv.(0) filename;
       exit 2
 
-let find_skips filename = 
+let find_skips filename =
   List.filter
     (fun (rg_filename, _) -> Str.string_match rg_filename filename 0)
     !skips
@@ -74,7 +74,7 @@ let find_skips filename =
 
 let _ =
   try
-    generators := 
+    generators :=
       List.map (function regexp, model, parameters ->
 	(Str.regexp (sprintf "^%s$" regexp), (Model.find model) parameters)
       ) builtin_config
@@ -91,18 +91,18 @@ let _ =
 let read_headerfile filename =
   let ic = open_in filename in
   let rec loop () =
-    try 
+    try
       let line = input_line ic in
       line :: loop ()
     with
       End_of_file -> close_in ic; []
   in
-  let header = 
+  let header =
     loop ()
   in
   let header_width =
-    List.fold_left 
-      (fun w line -> max (Model.string_length line) w)  
+    List.fold_left
+      (fun w line -> max (Model.string_length line) w)
       0
       header
   in
@@ -141,7 +141,7 @@ let pipe_file f filename =
   Unix.chmod tempname (Unix.stat filename).Unix.st_perm;
   Sys.remove filename;
   Sys.rename tempname filename
-  
+
 
 let copy ic oc =
   let len = 256 in
@@ -215,9 +215,9 @@ let main () =
   "-r",
   Arg.Unit (fun () -> action := Remove),
   "        Remove headers in files";
-  
+
   ]
-  
+
     anonymous
 
     (sprintf
@@ -226,7 +226,7 @@ let main () =
        <file>     Process file <file>"
     Info.name Info.version Info.name);
 
-  
+
   ()
 
 
