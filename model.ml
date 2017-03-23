@@ -35,7 +35,7 @@ type generator =
 
 type model = (string * string) list -> generator
 
-let models : (string, model) Hashtbl.t = 
+let models : (string, model) Hashtbl.t =
   Hashtbl.create 3
 
 let add name m =
@@ -61,7 +61,7 @@ let arg_int args ?default name =
   try
     int_of_string (arg_string args ?default name)
   with
-    Failure "int_of_string" -> 
+    Failure "int_of_string" ->
       raise (Error (sprintf "parameter %s expects an integer" name))
 
 let arg_char args ?default name =
@@ -69,11 +69,11 @@ let arg_char args ?default name =
   if string_length s = 1 then s.[0]
   else raise (Error (sprintf "parameter %s expects a character" name))
 
-    
+
 
 let make_frame ~open_comment ~close_comment ~line_char ~margin ~width =
 
-  let regexp_header = 
+  let regexp_header =
     Str.regexp_string (sprintf "%s%s" open_comment (String.make 10 line_char))
   in
   let regexp_blank = Str.regexp "^[ ]*$" in
@@ -86,10 +86,10 @@ let make_frame ~open_comment ~close_comment ~line_char ~margin ~width =
 	while not (Str.string_match regexp_blank (input_line ic) 0) do () done;
 	""
       end
-      else if Str.string_match regexp_blank line 0 
+      else if Str.string_match regexp_blank line 0
       then ""
       else (line ^ "\n")
-    with End_of_file -> 
+    with End_of_file ->
       ""
   in
 
@@ -99,7 +99,7 @@ let make_frame ~open_comment ~close_comment ~line_char ~margin ~width =
     let white = String.make width' ' ' in
     let line = String.make width' line_char in
     Printf.fprintf oc "%s%s%s\n" open_comment line close_comment;
-    
+
     List.iter (function string ->
       output_string oc open_comment;
       output_string oc margin;
@@ -115,11 +115,11 @@ let make_frame ~open_comment ~close_comment ~line_char ~margin ~width =
 
   { remove = remove;
     create = create
-  } 
+  }
 
 let _ =
-  add "frame" begin function args -> 
-	make_frame 
+  add "frame" begin function args ->
+	make_frame
 	  ~open_comment:(arg_string args "open")
 	  ~close_comment:(arg_string args "close")
 	  ~line_char:(arg_char args "line")
@@ -132,10 +132,10 @@ let _ =
 let make_lines ~open_comment ~close_comment ~line_char ~begin_line
     ~begin_last ~width =
 
-  let regexp_begin = 
+  let regexp_begin =
     Str.regexp_string (sprintf "%s%s" open_comment (String.make 10 line_char))
   in
-  let regexp_end = 
+  let regexp_end =
     Str.regexp_string (sprintf "%s%s" (String.make 10 line_char) close_comment)
   in
   let end_length = 10 + String.length close_comment
@@ -155,25 +155,25 @@ let make_lines ~open_comment ~close_comment ~line_char ~begin_line
         do () done;
 	""
       end
-      else if Str.string_match regexp_blank line 0 
+      else if Str.string_match regexp_blank line 0
       then ""
       else (line ^ "\n")
-    with End_of_file -> 
+    with End_of_file ->
       ""
   in
 
   let create oc header header_width =
     let real_width = max width header_width in
-    Printf.fprintf oc "%s%s\n" open_comment 
+    Printf.fprintf oc "%s%s\n" open_comment
       (String.make (max 0 (real_width - String.length open_comment)) line_char);
-    
+
     List.iter (function string ->
       output_string oc begin_line;
       output_string oc string;
       output_char oc '\n'
     ) header;
 
-    Printf.fprintf oc "%s%s%s\n\n" 
+    Printf.fprintf oc "%s%s%s\n\n"
       begin_last
       (String.make (max 0 (real_width - String.length begin_last
 			     - String.length close_comment)) line_char)
@@ -183,11 +183,11 @@ let make_lines ~open_comment ~close_comment ~line_char ~begin_line
 
   { remove = remove;
     create = create
-  } 
+  }
 
 let _ =
-  add "lines" begin function args -> 
-	make_lines 
+  add "lines" begin function args ->
+	make_lines
 	  ~open_comment:(arg_string args "open")
 	  ~close_comment:(arg_string args "close")
 	  ~line_char:(arg_char args "line")
@@ -195,14 +195,14 @@ let _ =
 	  ~begin_last:(arg_string args ~default:"" "last")
 	  ~width:(arg_int args ~default:"70" "width")
   end
-      
+
 
 
 let make_no () =
 
   { remove = (fun _ -> "");
     create = (fun _ _ _ -> ())
-  } 
+  }
 
 let _ =
   add "no" (function _ -> make_no ())
