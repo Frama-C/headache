@@ -61,7 +61,7 @@ let arg_int args ?default name =
   try
     int_of_string (arg_string args ?default name)
   with
-    Failure "int_of_string" ->
+    Failure _ ->
       raise (Error (sprintf "parameter %s expects an integer" name))
 
 let arg_char args ?default name =
