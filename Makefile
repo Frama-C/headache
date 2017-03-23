@@ -27,7 +27,7 @@ clean:
 	$(OCAMLBUILD) -clean
 	rm -f config_builtin.ml
 
-install: headache
+install:
 ifndef INSTALLDIR
 	@ echo "Please define INSTALLDIR."
 else
@@ -39,4 +39,3 @@ bootstrap: headache
 
 config_builtin.ml: config_builtin mkconfig
 	_build/mkconfig.native
-
