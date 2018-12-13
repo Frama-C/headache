@@ -33,4 +33,7 @@ build: [
   [make]
 ]
 
-install: [make "INSTALLDIR=%{prefix}%/bin" "install"]
+install:  [
+  [make "INSTALLDIR=%{prefix}%/bin" "install"]
+  [make "DOC_INSTALLDIR=%{prefix}%/doc/headache" "install-doc"] {with-doc}
+]

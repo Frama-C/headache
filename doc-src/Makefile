@@ -1,24 +1,55 @@
+##########################################################################
+#                                                                        #
+#                               Headache                                 #
+#                                                                        #
+#          Vincent Simonet, Projet Cristal, INRIA Rocquencourt           #
+#                                                                        #
+#  Copyright 2002                                                        #
+#  Institut National de Recherche en Informatique et en Automatique.     #
+#  All rights reserved.  This file is distributed under the terms of     #
+#  the GNU Library General Public License.                               #
+#                                                                        #
+#  Vincent.Simonet@inria.fr           http://cristal.inria.fr/~simonet/  #
+#                                                                        #
+##########################################################################
 
-all: manual.pdf manual.ps.gz manual.html manual.txt
+DOC_SRC?= .
+MANUAL := $(DOC_SRC)/manual
 
-clean:
-	rm -f *.pdf *.ps *.ps.gz *.dvi *.aux *.log *.thm *.txt *.html
+DOC_FILES= $(addprefix $(MANUAL)., pdf ps.gz html txt)
 
-manual.dvi: manual.tex
-	latex $^
-	latex $^
+.PHONY: doc clean-doc install-doc
 
-manual.ps: manual.dvi
-	dvips -t a4 -o $@ $^
+doc: $(DOC_FILES)
 
-manual.ps.gz: manual.ps
-	gzip -c $^ > $@
+clean-doc:
+	rm -f $(addprefix $(MANUAL)., pdf ps ps.gz dvi aux log thm txt html haux htoc)
 
-manual.pdf: manual.dvi
-	dvipdfm -p a4 -o $@ $^
+clean:: clean-doc
 
-manual.html: manual.dvi manual.tex
-	hevea manual.tex
+$(MANUAL).dvi: $(MANUAL).tex
+	cd $(dir $@) && latex $(notdir $<)
+	cd $(dir $@) && latex $(notdir $<)
 
-manual.txt: manual.dvi manual.tex
-	hevea -text manual.tex
+$(MANUAL).ps: $(MANUAL).dvi
+	dvips -t a4 -o $@ $<
+
+$(MANUAL).ps.gz: $(MANUAL).ps
+	gzip -c $< > $@
+
+$(MANUAL).pdf: $(MANUAL).dvi
+	dvipdfm -p a4 -o $@ $<
+
+$(MANUAL).html: $(MANUAL).tex $(MANUAL).dvi
+	hevea -o $@ $<
+
+$(MANUAL).txt: $(MANUAL).tex $(MANUAL).dvi
+	hevea -o $@ -text $<
+
+install-doc::
+ifndef DOC_INSTALLDIR
+	$(error "Please define DOC_INSTALLDIR.")
+else
+	mkdir -p $(DOC_INSTALLDIR)/
+	cp -f $(DOC_FILES) $(DOC_INSTALLDIR)/
+endif

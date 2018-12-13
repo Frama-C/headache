@@ -23,7 +23,7 @@ headache: config_builtin.ml
 mkconfig:
 	$(OCAMLBUILD) mkconfig.native
 
-clean:
+clean::
 	$(OCAMLBUILD) -clean
 	rm -f config_builtin.ml
 
@@ -36,7 +36,21 @@ else
 endif
 
 bootstrap: headache
-	_build/headache.native -h example *.ml* Makefile
+	_build/headache.native -h example *.ml* Makefile doc-src/Makefile doc-src/manual.tex
 
 config_builtin.ml: config_builtin mkconfig
 	_build/mkconfig.native
+
+# documentation
+ifndef DOC_INSTALLDIR
+DOC_SRC= doc-src
+# default installation from ./doc-src to ./doc and update of ./README
+DOC_INSTALLDIR= doc
+.PHONY: install-doc
+install-doc::
+	cp -f doc-src/manual.txt ./README
+else
+# for installation from ./doc to $(DOC_INSTALLDIR)
+DOC_SRC= doc
+endif
+sinclude doc-src/Makefile
