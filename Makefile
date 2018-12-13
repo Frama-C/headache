@@ -36,9 +36,9 @@ else
 endif
 
 bootstrap: headache
-	_build/headache.native -h example *.ml* Makefile doc-src/Makefile doc-src/manual.tex
+	_build/headache.native -h example $(filter-out config_builtin.ml, $(wildcard *.ml*)) Makefile doc-src/Makefile doc-src/manual.tex
 
-config_builtin.ml: config_builtin mkconfig
+config_builtin.ml: config_builtin.txt mkconfig
 	_build/mkconfig.native
 
 # documentation

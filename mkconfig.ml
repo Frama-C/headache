@@ -15,7 +15,7 @@
 
 open Printf
 
-let file_in = "config_builtin"
+let file_in = "config_builtin.txt"
 let file_out = "config_builtin.ml"
 
 let main () =
