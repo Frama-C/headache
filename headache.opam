@@ -1,0 +1,28 @@
+opam-version: "2.0"
+name: "headache"
+version: "1.03-utf8"
+
+license: "GNU Library General Public License"
+
+synopsis: "Automatic generation of files headers"
+description: """
+Lightweight tool for managing headers in source code files. It can
+update in any source code files (OCaml, C, XML et al).
+"""
+
+authors: [ "Vincent Simonet" ]
+
+maintainer: "Patrick Baudin"
+homepage: "https://github.com/frama-c/headache/"
+bug-reports: "https://github.com/frama-c/headache/issues"
+
+depends: [
+  "camomile"
+  "ocamlbuild" {build}
+]
+
+build: [
+  [make]
+]
+
+install: [make "INSTALLDIR=%{prefix}%/bin" "install"]

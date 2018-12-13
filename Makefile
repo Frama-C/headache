@@ -29,8 +29,9 @@ clean:
 
 install:
 ifndef INSTALLDIR
-	@ echo "Please define INSTALLDIR."
+	$(error "Please define INSTALLDIR.")
 else
+	mkdir -p $(INSTALLDIR)
 	cp -f _build/headache.native $(INSTALLDIR)/headache
 endif
 
