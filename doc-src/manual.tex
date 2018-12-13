@@ -1,0 +1,206 @@
+%BEGIN LATEX
+\documentclass{vs-article}
+%END LATEX
+%HEVEA \documentclass{article}
+
+\usepackage{alltt}
+\usepackage{moreverb}
+\usepackage{url}
+
+\newcommand{\headache}{\texttt{headache}}
+
+
+
+\title{\headache{}}
+\author{Vincent Simonet}
+\date{November, 2002}
+
+\begin{document}
+
+\maketitle
+
+%HEVEA This manual is also available in \ahref{manual.txt}{plain text},
+%HEVEA \ahref{manual.ps.gz}{PostScript} and \ahref{manual.pdf}{PDF}.
+
+% *************************************************************************
+\section{Overview}
+
+It is a common usage to put at the beginning of source code files a
+short header giving, for instance, some copyright informations.
+\headache{} is a simple and lightweight tool for managing easily these
+headers.  Among its functionalities, one may mention:
+\begin{itemize}
+\item Headers must generally be generated as \emph{comments} in source
+  code files.  \headache{} deals with different files types and generates
+  for each of them headers in an appropriate format.
+\item Headers automatically detects existing headers and removes them.
+  Thus, you can use it to update headers in a set of files.
+\end{itemize}
+\headache{} is distributed under the terms of the \emph{GNU General
+  Public License}.  See file \verb+LICENSE+ of the distribution for
+more information.
+
+
+% *************************************************************************
+\section{Compilation and installation}
+
+Building \headache{} requires \emph{Objective Caml} (version 3.06 or up,
+available at \url{http://caml.inria.fr/}) and \emph{GNU Make}.  
+
+\paragraph{Instructions}
+
+\begin{enumerate}
+\item Configure the system.  From the source directory, do:
+\begin{alltt}
+  ./configure
+\end{alltt}
+This generates the \verb+Makefile+ in the source directory.  The
+software is installed by default in \verb+/usr/local/bin+.  This path
+is customizable thanks to the \verb+--bindir+ option.
+
+\item Build the executable.  From the source directory, do:
+\begin{alltt}
+  make
+\end{alltt}  
+  This builds an executable named \headache{}.  
+  
+\item In order to install it in the directory specified during
+  configuration, as a superuser, do:
+\begin{alltt}
+  make install
+\end{alltt}
+\end{enumerate}
+
+
+% *************************************************************************
+\section{Usage}
+
+Let us illustrate the use of this tool with a small example.  Assume
+you have a small project mixing C and Caml code consisting in three
+files \verb+foo.c+, \verb+bar.ml+ and \verb+bar.mli'+, and you want to
+equip them with some header.  First of all, write a \emph{header
+  file}, i.e.\ a plain text file including the information headers
+must mention.  An example of such a file is given in
+figure~\ref{figure:header}.  In the following, we assume this file is
+named \verb+myheader+ and is in the same directory as source files.
+
+Then, in order to generate headers, just run the command:
+\begin{alltt}
+  headache -h myheader foo.c bar.ml bar.mli
+\end{alltt}
+Each file is equipped with an header including the text given in the
+header file \verb+myheader+, surrounded by some extra characters
+depending on its format making it a comment (e.g.\ \verb+(*+ and
+\verb+*)+ in \verb+.ml+ files).  If you update informations in the
+header file \verb+myheader+, you simply need to re-run the above
+command to update headers in source code files: existing ones are
+automatically removed.
+
+Similarly, running:
+\begin{alltt}
+  headache -r foo.c bar.ml bar.mli
+\end{alltt}
+removes any existing in files \verb+foo.c+, \verb+bar.ml+ and
+\verb+bar.mli+.  Files which do not have a header are kept unchanged.
+
+\begin{figure}
+\begin{center}
+\begin{boxedverbatim}
+                             Headache
+               Automatic generation of files headers
+
+        Vincent Simonet, Projet Cristal, INRIA Rocquencourt
+
+Copyright 2002 
+Institut National de Recherche en Informatique et en Automatique.
+All rights reserved.  This file is distributed under the terms of
+the GNU Library General Public License.
+
+Vincent.Simonet@inria.fr           http://cristal.inria.fr/~simonet/
+\end{boxedverbatim}
+\end{center}
+  \caption{An example of header file}
+  \label{figure:header}
+\end{figure}
+
+
+
+% *************************************************************************
+\section{Configuration file}
+
+File types and format of header may be specified by a
+\emph{configuration file}.  By default, the default builtin
+configuration file given in figure~\ref{figure:config} is used.  You
+can also use your own configuration file thanks to the \verb+-c+
+option:
+\begin{alltt}
+  headache -c myconfig -h myheader foo.c bar.ml bar.mli
+\end{alltt}
+
+In order to write your own configuration, you can follow the example
+given in figure~\ref{figure:config}.  A configuration file consists in
+a list of \emph{entries} separated by the character \verb+|+.  Each
+of them is made of two parts separated by an \verb+->+:
+\begin{itemize}
+\item The first one is a \emph{regular expression}.  (Regular
+  expression are enclosed within double quotes and have the same
+  syntax as in Gnu Emacs.)  \headache{} determines file types according to
+  file basenames; thus, each file is dealt with using the first line
+  its name matches.
+\item The second one describes the format of headers for files of this
+  type.  It consists of the name of a \emph{model} (e.g.\ 
+  \verb+frame+), possibly followed by a list of arguments.  Arguments
+  are named: \verb+open:"(*"+ means that the value of the argument
+  \verb+open+ is \verb+(*+.
+\end{itemize}
+\headache{} currently supports three \emph{models}:
+\begin{itemize}
+\item \verb+frame+.  With this model, headers are generated in a
+  frame.  This model requires three arguments: \verb+open+ and
+  \verb+close+ (the opening and closing sequences for comments) and
+  \verb+line+ (the character used to make the horizontal lines of the
+  frame).  Two optional arguments may be used \verb+margin+ (a string
+  printed between the left and right side of the frame and the border,
+  by default two spaces) and \verb+width+ (the width of the inside of
+  the frame, default is 68).
+\item \verb+lines+.  Headers are typeset between two lines.  Three
+  arguments must be provided: \verb+open+ and \verb+close+ (the
+  opening and closing sequences for comments), \verb+line+ (the
+  character used to make the horizontal lines).  Three optional
+  arguments are allowd: \verb+begin+ (a string typeset at the
+  beginning of each line, by default two spaces), \verb+last+ (a
+  string typeset at the beginning of the last line) and \verb+width+
+  (the width of the lines, default is 70).
+\item \verb+no+.  This model generates no header and has no argument.
+\end{itemize}
+
+It is possible to change the default builtin configuration file at
+compile time.  For this, just edit the file \verb+config_builtin+
+present in the source distribution before building the software.
+
+
+\begin{figure}
+\begin{center}
+\begin{boxedverbatim}
+# Objective Caml source 
+  ".*\\.ml[il]?" -> frame open:"(*" line:"*" close:"*)"
+| ".*\\.mly"     -> frame open:"/*" line:"*" close:"*/"
+# C source
+| ".*\\.[ch]"    -> frame open:"/*" line:"*" close:"*/"
+# Misc
+| ".*Makefile.*" -> frame open:"#"  line:"#" close:"#"
+| ".*README.*"   -> frame open:"*"  line:"*" close:"*"
+| ".*LICENSE.*"  -> frame open:"*"  line:"*" close:"*"
+\end{boxedverbatim}
+\end{center}
+  \caption{The default builtin configuration file}
+  \label{figure:config}
+\end{figure}
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
+
