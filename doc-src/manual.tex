@@ -161,9 +161,9 @@ given in figure~\ref{figure:config}.  A configuration file consists in
 a list of \emph{entries} separated by the character \verb+|+.  Each
 of them is made of two parts separated by an \verb+->+:
 \begin{itemize}
-\item The first one is a \emph{regular expression}.  (Regular
+\item The first one is a \emph{regular expression}.  Regular
   expression are enclosed within double quotes and have the same
-  syntax as in Gnu Emacs.)  \headache{} determines file types according to
+  syntax as in Gnu Emacs.  \headache{} determines file types according to
   file basenames; thus, each file is dealt with using the first line
   its name matches.
 \item The second one describes the format of headers for files of this
@@ -201,11 +201,14 @@ present in the source distribution before building the software.
 \begin{figure}
 \begin{center}
 \begin{boxedverbatim}
-# Objective Caml source 
+# Objective Caml source
   ".*\\.ml[il]?" -> frame open:"(*" line:"*" close:"*)"
+| ".*\\.fml[i]?" -> frame open:"(*" line:"*" close:"*)"
 | ".*\\.mly"     -> frame open:"/*" line:"*" close:"*/"
 # C source
-| ".*\\.[ch]"    -> frame open:"/*" line:"*" close:"*/"
+| ".*\\.[chy]"    -> frame open:"/*" line:"*" close:"*/"
+# Latex
+| ".*\\.tex"     -> frame open:"%"  line:"%" close:"%"
 # Misc
 | ".*Makefile.*" -> frame open:"#"  line:"#" close:"#"
 | ".*README.*"   -> frame open:"*"  line:"*" close:"*"
