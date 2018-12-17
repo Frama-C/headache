@@ -123,8 +123,11 @@ removes any existing in files \verb+foo.c+, \verb+bar.ml+ and
 \verb+bar.mli+.  Files which do not have a header are kept unchanged.
 
 \begin{figure}
+%BEGIN LATEX
 \begin{center}
+%END LATEX
 \begin{boxedverbatim}
+
                              Headache
                Automatic generation of files headers
 
@@ -137,7 +140,9 @@ the GNU Library General Public License.
 
 Vincent.Simonet@inria.fr           http://cristal.inria.fr/~simonet/
 \end{boxedverbatim}
+%BEGIN LATEX
 \end{center}
+%END LATEX
   \caption{An example of header file}
   \label{figure:header}
 \end{figure}
@@ -199,8 +204,11 @@ present in the source distribution before building the software.
 
 
 \begin{figure}
+%BEGIN LATEX
 \begin{center}
+%END LATEX
 \begin{boxedverbatim}
+
 # Objective Caml source
   ".*\\.ml[il]?" -> frame open:"(*" line:"*" close:"*)"
 | ".*\\.fml[i]?" -> frame open:"(*" line:"*" close:"*)"
@@ -214,7 +222,9 @@ present in the source distribution before building the software.
 | ".*README.*"   -> frame open:"*"  line:"*" close:"*"
 | ".*LICENSE.*"  -> frame open:"*"  line:"*" close:"*"
 \end{boxedverbatim}
+%BEGIN LATEX
 \end{center}
+%END LATEX
   \caption{The default builtin configuration file}
   \label{figure:config}
 \end{figure}
