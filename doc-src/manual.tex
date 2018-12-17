@@ -59,6 +59,7 @@ headers.  Among its functionalities, one may mention:
 \item Headers automatically detects existing headers and removes them.
   Thus, you can use it to update headers in a set of files.
 \end{itemize}
+
 \headache{} is distributed under the terms of the \emph{GNU Library General
   Public License}.  See file \verb+LICENSE+ of the distribution for
 more information.
@@ -68,32 +69,27 @@ more information.
 \section{Compilation and installation}
 
 Building \headache{} requires \emph{Objective Caml} (version 3.06 or up,
-available at \url{http://caml.inria.fr/}) and \emph{GNU Make}.  
+available at \url{http://caml.inria.fr/}) and \emph{GNU Make}.
+In addition, from version \texttt{1.03-utf8}, the build requires the Unicode library \emph{Camomile} and \emph{OCamlbuild}.
 
 \paragraph{Instructions}
 
-\begin{enumerate}
-\item Configure the system.  From the source directory, do:
 \begin{alltt}
-  ./configure
+  make && sudo make INSTALLDIR=/usr/local/bin install
 \end{alltt}
-This generates the \verb+Makefile+ in the source directory.  The
-software is installed by default in \verb+/usr/local/bin+.  This path
-is customizable thanks to the \verb+--bindir+ option.
+Build the executable and install it into the specified directory.
 
-\item Build the executable.  From the source directory, do:
+\headache{} is available through \emph{OPAM} (available at
+\url{http://opam.ocaml.org/}), the \emph{OCaml Package Manager}.
+This is the preferred installation method.
+Be sure to install opam v1.2 or higher.
+Then the following sequence of commands should install the package:
 \begin{alltt}
-  make
-\end{alltt}  
-  This builds an executable named \headache{}.  
-  
-\item In order to install it in the directory specified during
-  configuration, as a superuser, do:
-\begin{alltt}
-  make install
+  opam init
+  opam install depext
+  opam depext headache
+  opam install headache
 \end{alltt}
-\end{enumerate}
-
 
 % *************************************************************************
 \section{Usage}
