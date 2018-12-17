@@ -196,7 +196,7 @@ of them is made of two parts separated by an \mytt{->}:
   arguments must be provided: \mytt{open} and \mytt{close} (the
   opening and closing sequences for comments), \mytt{line} (the
   character used to make the horizontal lines).  Three optional
-  arguments are allowd: \mytt{begin} (a string typeset at the
+  arguments are allowed: \mytt{begin} (a string typeset at the
   beginning of each line, by default two spaces), \mytt{last} (a
   string typeset at the beginning of the last line) and \mytt{width}
   (the width of the lines, default is 70).
@@ -232,6 +232,38 @@ present in the source distribution before building the software.
 %END LATEX
   \caption{The default builtin configuration file}
   \label{figure:config}
+\end{figure}
+
+It is also possible to add entries into your own configuration file that
+specify when the first line of the processed file has to be skipped.
+As previously, these \emph{entries} are separated by the character \mytt{|}
+and each of them is made of two parts separated by an \mytt{->}:
+\begin{itemize}
+\item Again, the first part is a \emph{regular expression} used by \headache{}
+  to determine the file type. But here, it is according to
+  its full filename (including the pathname).
+\item The second part specifies when the first line must be skipped.
+  It consists of the keyword \mytt{skip} followed by the named
+  argument \mytt{match:} a \emph{regular expression}.
+  When the first line of such a file type matches,
+  \headache{} does not modify that line and considers that the header must
+  start at the second line.
+\end{itemize}
+
+\begin{figure}
+%BEGIN LATEX
+\begin{center}
+%END LATEX
+\begin{boxedverbatim}
+# Script file
+| ".*\\.sh" -> frame open:"#"  line:"#" close:"#"
+| ".*\\.sh" -> skip match:"#!.*"
+\end{boxedverbatim}
+%BEGIN LATEX
+\end{center}
+%END LATEX
+  \caption{Example of a configuration file for skipping the shebang line of shell scripts}
+  \label{figure:example}
 \end{figure}
 
 \end{document}
