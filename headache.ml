@@ -206,15 +206,15 @@ let main () =
 
   "-h",
   Arg.String (fun s -> let (header, header_width) = (read_headerfile s) in action := Create (header, header_width)),
-  "<file>  Create headers with text from <file>";
+  "<header-file>  Create headers with text from the header file";
 
   "-c",
   Arg.String read_configfile,
-  "<file>  Read the given configuration file";
+  "<config-file>  Read the given configuration file";
 
   "-r",
   Arg.Unit (fun () -> action := Remove),
-  "        Remove headers in files";
+  "               Remove headers in files";
 
   ]
 
@@ -222,8 +222,9 @@ let main () =
 
     (sprintf
        "%s, version %s\n\
-       Usage: %s <arguments>\nArguments are:\n  \
-       <file>     Process file <file>"
+       Usage: %s <options> <files>\n  \
+       Process headers of given files\n\
+       Optional arguments are:"
     Info.name Info.version Info.name);
 
 
