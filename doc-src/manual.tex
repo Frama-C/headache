@@ -30,7 +30,12 @@
 \usepackage{moreverb}
 \usepackage{url}
 
-\newcommand{\headache}{\texttt{headache}}
+%BEGIN LATEX
+\newcommand{\mytt}[1]{\texttt{#1}}
+%END LATEX
+%HEVEA \newcommand{\mytt}[1]{`\texttt{#1}`}
+
+\newcommand{\headache}{\mytt{headache}}
 
 
 
@@ -61,7 +66,7 @@ headers.  Among its functionalities, one may mention:
 \end{itemize}
 
 \headache{} is distributed under the terms of the \emph{GNU Library General
-  Public License}.  See file \verb+LICENSE+ of the distribution for
+  Public License}.  See file \mytt{LICENSE} of the distribution for
 more information.
 
 
@@ -96,22 +101,22 @@ Then the following sequence of commands should install the package:
 
 Let us illustrate the use of this tool with a small example.  Assume
 you have a small project mixing C and Caml code consisting in three
-files \verb+foo.c+, \verb+bar.ml+ and \verb+bar.mli'+, and you want to
+files \mytt{foo.c}, \mytt{bar.ml} and \mytt{bar.mli}, and you want to
 equip them with some header.  First of all, write a \emph{header
   file}, i.e.\ a plain text file including the information headers
 must mention.  An example of such a file is given in
 figure~\ref{figure:header}.  In the following, we assume this file is
-named \verb+myheader+ and is in the same directory as source files.
+named \mytt{myheader} and is in the same directory as source files.
 
 Then, in order to generate headers, just run the command:
 \begin{alltt}
   headache -h myheader foo.c bar.ml bar.mli
 \end{alltt}
 Each file is equipped with an header including the text given in the
-header file \verb+myheader+, surrounded by some extra characters
-depending on its format making it a comment (e.g.\ \verb+(*+ and
-\verb+*)+ in \verb+.ml+ files).  If you update informations in the
-header file \verb+myheader+, you simply need to re-run the above
+header file \mytt{myheader}, surrounded by some extra characters
+depending on its format making it a comment (e.g.\ \mytt{(*} and
+\mytt{*)} in \mytt{.ml} files).  If you update informations in the
+header file \mytt{myheader}, you simply need to re-run the above
 command to update headers in source code files: existing ones are
 automatically removed.
 
@@ -119,8 +124,8 @@ Similarly, running:
 \begin{alltt}
   headache -r foo.c bar.ml bar.mli
 \end{alltt}
-removes any existing in files \verb+foo.c+, \verb+bar.ml+ and
-\verb+bar.mli+.  Files which do not have a header are kept unchanged.
+removes any existing in files \mytt{foo.c}, \mytt{bar.ml} and
+\mytt{bar.mli}.  Files which do not have a header are kept unchanged.
 
 \begin{figure}
 %BEGIN LATEX
@@ -155,7 +160,7 @@ Vincent.Simonet@inria.fr           http://cristal.inria.fr/~simonet/
 File types and format of header may be specified by a
 \emph{configuration file}.  By default, the default builtin
 configuration file given in figure~\ref{figure:config} is used.  You
-can also use your own configuration file thanks to the \verb+-c+
+can also use your own configuration file thanks to the \mytt{-c}
 option:
 \begin{alltt}
   headache -c myconfig -h myheader foo.c bar.ml bar.mli
@@ -163,8 +168,8 @@ option:
 
 In order to write your own configuration, you can follow the example
 given in figure~\ref{figure:config}.  A configuration file consists in
-a list of \emph{entries} separated by the character \verb+|+.  Each
-of them is made of two parts separated by an \verb+->+:
+a list of \emph{entries} separated by the character \mytt{|}.  Each
+of them is made of two parts separated by an \mytt{->}:
 \begin{itemize}
 \item The first one is a \emph{regular expression}.  Regular
   expression are enclosed within double quotes and have the same
@@ -173,33 +178,33 @@ of them is made of two parts separated by an \verb+->+:
   its name matches.
 \item The second one describes the format of headers for files of this
   type.  It consists of the name of a \emph{model} (e.g.\ 
-  \verb+frame+), possibly followed by a list of arguments.  Arguments
-  are named: \verb+open:"(*"+ means that the value of the argument
-  \verb+open+ is \verb+(*+.
+  \mytt{frame}), possibly followed by a list of arguments.  Arguments
+  are named: \mytt{open:"(*"} means that the value of the argument
+  \mytt{open} is \mytt{(*}.
 \end{itemize}
 \headache{} currently supports three \emph{models}:
 \begin{itemize}
-\item \verb+frame+.  With this model, headers are generated in a
-  frame.  This model requires three arguments: \verb+open+ and
-  \verb+close+ (the opening and closing sequences for comments) and
-  \verb+line+ (the character used to make the horizontal lines of the
-  frame).  Two optional arguments may be used \verb+margin+ (a string
+\item \mytt{frame}.  With this model, headers are generated in a
+  frame.  This model requires three arguments: \mytt{open} and
+  \mytt{close} (the opening and closing sequences for comments) and
+  \mytt{line} (the character used to make the horizontal lines of the
+  frame).  Two optional arguments may be used \mytt{margin} (a string
   printed between the left and right side of the frame and the border,
-  by default two spaces) and \verb+width+ (the width of the inside of
+  by default two spaces) and \mytt{width} (the width of the inside of
   the frame, default is 68).
-\item \verb+lines+.  Headers are typeset between two lines.  Three
-  arguments must be provided: \verb+open+ and \verb+close+ (the
-  opening and closing sequences for comments), \verb+line+ (the
+\item \mytt{lines}.  Headers are typeset between two lines.  Three
+  arguments must be provided: \mytt{open} and \mytt{close} (the
+  opening and closing sequences for comments), \mytt{line} (the
   character used to make the horizontal lines).  Three optional
-  arguments are allowd: \verb+begin+ (a string typeset at the
-  beginning of each line, by default two spaces), \verb+last+ (a
-  string typeset at the beginning of the last line) and \verb+width+
+  arguments are allowd: \mytt{begin} (a string typeset at the
+  beginning of each line, by default two spaces), \mytt{last} (a
+  string typeset at the beginning of the last line) and \mytt{width}
   (the width of the lines, default is 70).
-\item \verb+no+.  This model generates no header and has no argument.
+\item \mytt{no}.  This model generates no header and has no argument.
 \end{itemize}
 
 It is possible to change the default builtin configuration file at
-compile time.  For this, just edit the file \verb+config_builtin+
+compile time.  For this, just edit the file \mytt{config\_builtin}
 present in the source distribution before building the software.
 
 
@@ -230,9 +235,8 @@ present in the source distribution before building the software.
 \end{figure}
 
 \end{document}
-
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: t
-%%% End: 
+%%% End:
 
