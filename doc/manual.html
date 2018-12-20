@@ -1,113 +1,120 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
-            "http://www.w3.org/TR/REC-html40/loose.dtd">
-<HTML>
-<HEAD><TITLE>headache</TITLE>
-
-<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<META name="GENERATOR" content="hevea 1.07">
-</HEAD>
-<BODY >
-<!--HEVEA command line is: hevea manual.tex -->
-<!--HTMLHEAD-->
-<!--ENDHTML-->
-<!--PREFIX <ARG ></ARG>-->
-<!--CUT DEF section 1 -->
-
-
-<H1 ALIGN=center><TT>headache</TT></H1>
-
-<H3 ALIGN=center>Vincent Simonet</H3>
-
-<H3 ALIGN=center>November, 2002</H3>
-This manual is also available in <A HREF="manual.txt">plain text</A>,
-<A HREF="manual.ps.gz">PostScript</A> and <A HREF="manual.pdf">PDF</A>.<BR>
-<BR>
-<!--TOC section Overview-->
-
-<H2><A NAME="htoc1">1</A>&nbsp;&nbsp;Overview</H2><!--SEC END -->
-
-It is a common usage to put at the beginning of source code files a
+<!DOCTYPE html>
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="generator" content="hevea 2.32">
+<style type="text/css">
+.li-itemize{margin:1ex 0ex;}
+.li-enumerate{margin:1ex 0ex;}
+.dd-description{margin:0ex 0ex 1ex 4ex;}
+.dt-description{margin:0ex;}
+.toc{list-style:none;}
+.footnotetext{margin:0ex; padding:0ex;}
+div.footnotetext P{margin:0px; text-indent:1em;}
+.thefootnotes{text-align:left;margin:0ex;}
+.dt-thefootnotes{margin:0em;}
+.dd-thefootnotes{margin:0em 0em 0em 2em;}
+.footnoterule{margin:1em auto 1em 0px;width:50%;}
+.caption{padding-left:2ex; padding-right:2ex; margin-left:auto; margin-right:auto}
+.title{margin:2ex auto;text-align:center}
+.titlemain{margin:1ex 2ex 2ex 1ex;}
+.titlerest{margin:0ex 2ex;}
+.center{text-align:center;margin-left:auto;margin-right:auto;}
+.flushleft{text-align:left;margin-left:0ex;margin-right:auto;}
+.flushright{text-align:right;margin-left:auto;margin-right:0ex;}
+div table{margin-left:inherit;margin-right:inherit;margin-bottom:2px;margin-top:2px}
+td table{margin:auto;}
+table{border-collapse:collapse;}
+td{padding:0;}
+.cellpadding0 tr td{padding:0;}
+.cellpadding1 tr td{padding:1px;}
+pre{text-align:left;margin-left:0ex;margin-right:auto;}
+blockquote{margin-left:4ex;margin-right:4ex;text-align:left;}
+td p{margin:0px;}
+.boxed{border:1px solid black}
+.textboxed{border:1px solid black}
+.vbar{border:none;width:2px;background-color:black;}
+.hbar{border:none;height:2px;width:100%;background-color:black;}
+.hfill{border:none;height:1px;width:200%;background-color:black;}
+.vdisplay{border-collapse:separate;border-spacing:2px;width:auto; empty-cells:show; border:2px solid red;}
+.vdcell{white-space:nowrap;padding:0px; border:2px solid green;}
+.display{border-collapse:separate;border-spacing:2px;width:auto; border:none;}
+.dcell{white-space:nowrap;padding:0px; border:none;}
+.dcenter{margin:0ex auto;}
+.vdcenter{border:solid #FF8000 2px; margin:0ex auto;}
+.minipage{text-align:left; margin-left:0em; margin-right:auto;}
+.marginpar{border:solid thin black; width:20%; text-align:left;}
+.marginparleft{float:left; margin-left:0ex; margin-right:1ex;}
+.marginparright{float:right; margin-left:1ex; margin-right:0ex;}
+.theorem{text-align:left;margin:1ex auto 1ex 0ex;}
+.part{margin:2ex auto;text-align:center}
+</style>
+<title>`headache`
+</title>
+</head>
+<body >
+<!--HEVEA command line is: hevea -o doc-src/manual.html doc-src/manual.tex -->
+<!--CUT STYLE article--><!--CUT DEF section 1 --><table class="title"><tr><td style="padding:1ex"><h1 class="titlemain">&#X2018;<span style="font-family:monospace">headache</span>&#X2018;</h1><h3 class="titlerest">Vincent Simonet</h3><h3 class="titlerest">November, 2002</h3></td></tr>
+</table><p>This manual is also available in <a href="manual.txt">plain text</a>,
+<a href="manual.ps.gz">PostScript</a> and <a href="manual.pdf">PDF</a>.</p>
+<!--TOC section id="sec1" Overview-->
+<h2 id="sec1" class="section">1&#XA0;&#XA0;Overview</h2><!--SEC END --><p>It is a common usage to put at the beginning of source code files a
 short header giving, for instance, some copyright informations.
-<TT>headache</TT> is a simple and lightweight tool for managing easily these
+&#X2018;<span style="font-family:monospace">headache</span>&#X2018; is a simple and lightweight tool for managing easily these
 headers. Among its functionalities, one may mention:
-<UL><LI>
-Headers must generally be generated as <EM>comments</EM> in source
- code files. <TT>headache</TT> deals with different files types and generates
- for each of them headers in an appropriate format.
-<LI>Headers automatically detects existing headers and removes them.
- Thus, you can use it to update headers in a set of files.
-</UL>
-<TT>headache</TT> is distributed under the terms of the <EM>GNU Library
- General Public License</EM>. See file <CODE>LICENSE</CODE> of the
-distribution for more information.<BR>
-<BR>
-<!--TOC section Compilation and installation-->
-
-<H2><A NAME="htoc2">2</A>&nbsp;&nbsp;Compilation and installation</H2><!--SEC END -->
-
-Building <TT>headache</TT> requires <EM>Objective Caml</EM> (version 3.06 or up,
-available at <TT>http://caml.inria.fr/</TT>) and <EM>GNU Make</EM>. <BR>
-<BR>
-<!--TOC paragraph Instructions-->
-
-<H5>Instructions</H5><!--SEC END -->
-
-<OL type=1><LI>
-Configure the system. From the source directory, do:
-<PRE>
-  ./configure
-</PRE>
-This generates the <CODE>Makefile</CODE> in the source directory. The
-software is installed by default in <CODE>/usr/local/bin</CODE>. This path
-is customizable thanks to the <CODE>--bindir</CODE> option.<BR>
-<BR>
-<LI>Build the executable. From the source directory, do:
-<PRE>
-  make
-</PRE> 
- This builds an executable named <TT>headache</TT>. <BR>
-<BR>
-<LI>In order to install it in the directory specified during
- configuration, as a superuser, do:
-<PRE>
-  make install
-</PRE>
-</OL>
-<!--TOC section Usage-->
-
-<H2><A NAME="htoc3">3</A>&nbsp;&nbsp;Usage</H2><!--SEC END -->
-
-Let us illustrate the use of this tool with a small example. Assume
+</p><ul class="itemize"><li class="li-itemize">
+Headers must generally be generated as <em>comments</em> in source
+code files. &#X2018;<span style="font-family:monospace">headache</span>&#X2018; deals with different files types and generates
+for each of them headers in an appropriate format.
+</li><li class="li-itemize">Headers automatically detects existing headers and removes them.
+Thus, you can use it to update headers in a set of files.
+</li></ul><p>&#X2018;<span style="font-family:monospace">headache</span>&#X2018; is distributed under the terms of the <em>GNU Library General
+Public License</em>. See file &#X2018;<span style="font-family:monospace">LICENSE</span>&#X2018; of the distribution for
+more information.</p>
+<!--TOC section id="sec2" Compilation and installation-->
+<h2 id="sec2" class="section">2&#XA0;&#XA0;Compilation and installation</h2><!--SEC END --><p>Building &#X2018;<span style="font-family:monospace">headache</span>&#X2018; requires <em>Objective Caml</em> (version 3.06 or up,
+available at <span style="font-family:monospace">http://caml.inria.fr/</span>) and <em>GNU Make</em>.
+In addition, from version <span style="font-family:monospace">1.03-utf8</span>, the build requires the Unicode library <em>Camomile</em> and <em>OCamlbuild</em>.</p>
+<!--TOC paragraph id="sec3" Instructions-->
+<h4 id="sec3" class="paragraph">Instructions</h4><!--SEC END --><pre>
+  make &amp;&amp; sudo make INSTALLDIR=/usr/local/bin install
+</pre><p>
+Build the executable and install it into the specified directory.</p><p>&#X2018;<span style="font-family:monospace">headache</span>&#X2018; is available through <em>OPAM</em> (available at
+<span style="font-family:monospace">http://opam.ocaml.org/</span>), the <em>OCaml Package Manager</em>.
+This is the preferred installation method.
+Be sure to install opam v1.2 or higher.
+Then the following sequence of commands should install the package:
+</p><pre>
+  opam init
+  opam install depext
+  opam depext headache
+  opam install headache
+</pre>
+<!--TOC section id="sec4" Usage-->
+<h2 id="sec4" class="section">3&#XA0;&#XA0;Usage</h2><!--SEC END --><p>Let us illustrate the use of this tool with a small example. Assume
 you have a small project mixing C and Caml code consisting in three
-files <CODE>foo.c</CODE>, <CODE>bar.ml</CODE> and <CODE>bar.mli'</CODE>, and you want to
-equip them with some header. First of all, write a <EM>header
- file</EM>, i.e. a plain text file including the information headers
+files &#X2018;<span style="font-family:monospace">foo.c</span>&#X2018;, &#X2018;<span style="font-family:monospace">bar.ml</span>&#X2018; and &#X2018;<span style="font-family:monospace">bar.mli</span>&#X2018;, and you want to
+equip them with some header. First of all, write a <em>header
+file</em>, i.e. a plain text file including the information headers
 must mention. An example of such a file is given in
-figure&nbsp;<A HREF="#figure:header">1</A>. In the following, we assume this file is
-named <CODE>myheader</CODE> and is in the same directory as source files.<BR>
-<BR>
-Then, in order to generate headers, just run the command:
-<PRE>
+figure&#XA0;<a href="#figure%3Aheader">1</a>. In the following, we assume this file is
+named &#X2018;<span style="font-family:monospace">myheader</span>&#X2018; and is in the same directory as source files.</p><p>Then, in order to generate headers, just run the command:
+</p><pre>
   headache -h myheader foo.c bar.ml bar.mli
-</PRE>
+</pre><p>
 Each file is equipped with an header including the text given in the
-header file <CODE>myheader</CODE>, surrounded by some extra characters
-depending on its format making it a comment (e.g. <CODE>(*</CODE> and
-<CODE>*)</CODE> in <CODE>.ml</CODE> files). If you update informations in the
-header file <CODE>myheader</CODE>, you simply need to re-run the above
+header file &#X2018;<span style="font-family:monospace">myheader</span>&#X2018;, surrounded by some extra characters
+depending on its format making it a comment (e.g. &#X2018;<span style="font-family:monospace">(*</span>&#X2018; and
+&#X2018;<span style="font-family:monospace">*)</span>&#X2018; in &#X2018;<span style="font-family:monospace">.ml</span>&#X2018; files). If you update informations in the
+header file &#X2018;<span style="font-family:monospace">myheader</span>&#X2018;, you simply need to re-run the above
 command to update headers in source code files: existing ones are
-automatically removed.<BR>
-<BR>
-Similarly, running:
-<PRE>
+automatically removed.</p><p>Similarly, running:
+</p><pre>
   headache -r foo.c bar.ml bar.mli
-</PRE>
-removes any existing in files <CODE>foo.c</CODE>, <CODE>bar.ml</CODE> and
-<CODE>bar.mli</CODE>. Files which do not have a header are kept unchanged.
-<BLOCKQUOTE><DIV ALIGN=center><HR WIDTH="80%" SIZE=2></DIV>
-<DIV ALIGN=center>
-<TABLE BORDER=1 CELLPADDING=1 CELLSPACING=0>
-<TR><TD ALIGN="left"><PRE>
+</pre><p>
+removes any existing in files &#X2018;<span style="font-family:monospace">foo.c</span>&#X2018;, &#X2018;<span style="font-family:monospace">bar.ml</span>&#X2018; and
+&#X2018;<span style="font-family:monospace">bar.mli</span>&#X2018;. Files which do not have a header are kept unchanged.</p><blockquote class="figure"><div class="center"><hr style="width:80%;height:2"></div>
+<table style="border:1px;border-spacing:0" class="cellpadding1"><tr><td style="text-align:left"><pre class="verbatim">
                              Headache
                Automatic generation of files headers
 
@@ -119,90 +126,103 @@ All rights reserved.  This file is distributed under the terms of
 the GNU Library General Public License.
 
 Vincent.Simonet@inria.fr           http://cristal.inria.fr/~simonet/
-</PRE></TD>
-</TR></TABLE></DIV>
- <BR>
-<DIV ALIGN=center>Figure 1: An example of header file</DIV><BR>
-
- <A NAME="figure:header"></A>
-<DIV ALIGN=center><HR WIDTH="80%" SIZE=2></DIV></BLOCKQUOTE>
-<!--TOC section Configuration file-->
-
-<H2><A NAME="htoc4">4</A>&nbsp;&nbsp;Configuration file</H2><!--SEC END -->
-
-File types and format of header may be specified by a
-<EM>configuration file</EM>. By default, the default builtin
-configuration file given in figure&nbsp;<A HREF="#figure:config">2</A> is used. You
-can also use your own configuration file thanks to the <CODE>-c</CODE>
+</pre></td></tr>
+</table>
+<div class="caption"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="vertical-align:top;text-align:left;" >Figure 1: An example of header file</td></tr>
+</table></div>
+<a id="figure:header"></a>
+<div class="center"><hr style="width:80%;height:2"></div></blockquote>
+<!--TOC section id="sec5" Configuration file-->
+<h2 id="sec5" class="section">4&#XA0;&#XA0;Configuration file</h2><!--SEC END --><p>File types and format of header may be specified by a
+<em>configuration file</em>. By default, the default builtin
+configuration file given in figure&#XA0;<a href="#figure%3Aconfig">2</a> is used. You
+can also use your own configuration file thanks to the &#X2018;<span style="font-family:monospace">-c</span>&#X2018;
 option:
-<PRE>
+</p><pre>
   headache -c myconfig -h myheader foo.c bar.ml bar.mli
-</PRE>
-In order to write your own configuration, you can follow the example
-given in figure&nbsp;<A HREF="#figure:config">2</A>. A configuration file consists in
-a list of <EM>entries</EM> separated by the character <CODE>|</CODE>. Each
-of them is made of two parts separated by an <CODE>-&gt;</CODE>:
-<UL><LI>
-The first one is a <EM>regular expression</EM>. (Regular
- expression are enclosed within double quotes and have the same
- syntax as in Gnu Emacs.) <TT>headache</TT> determines file types according to
- file basenames; thus, each file is dealt with using the first line
- its name matches.
-<LI>The second one describes the format of headers for files of this
- type. It consists of the name of a <EM>model</EM> (e.g. 
- <CODE>frame</CODE>), possibly followed by a list of arguments. Arguments
- are named: <CODE>open:"(*"</CODE> means that the value of the argument
- <CODE>open</CODE> is <CODE>(*</CODE>.
-</UL>
-<TT>headache</TT> currently supports three <EM>models</EM>:
-<UL><LI>
-<CODE>frame</CODE>. With this model, headers are generated in a
- frame. This model requires three arguments: <CODE>open</CODE> and
- <CODE>close</CODE> (the opening and closing sequences for comments) and
- <CODE>line</CODE> (the character used to make the horizontal lines of the
- frame). Two optional arguments may be used <CODE>margin</CODE> (a string
- printed between the left and right side of the frame and the border,
- by default two spaces) and <CODE>width</CODE> (the width of the inside of
- the frame, default is 68).
-<LI><CODE>lines</CODE>. Headers are typeset between two lines. Three
- arguments must be provided: <CODE>open</CODE> and <CODE>close</CODE> (the
- opening and closing sequences for comments), <CODE>line</CODE> (the
- character used to make the horizontal lines). Three optional
- arguments are allowd: <CODE>begin</CODE> (a string typeset at the
- beginning of each line, by default two spaces), <CODE>last</CODE> (a
- string typeset at the beginning of the last line) and <CODE>width</CODE>
- (the width of the lines, default is 70).
-<LI><CODE>no</CODE>. This model generates no header and has no argument.
-</UL>
-It is possible to change the default builtin configuration file at
-compile time. For this, just edit the file <CODE>config_builtin</CODE>
-present in the source distribution before building the software.
-<BLOCKQUOTE><DIV ALIGN=center><HR WIDTH="80%" SIZE=2></DIV>
-<DIV ALIGN=center>
-<TABLE BORDER=1 CELLPADDING=1 CELLSPACING=0>
-<TR><TD ALIGN="left"><PRE>
-# Objective Caml source 
+</pre><p>In order to write your own configuration, you can follow the example
+given in figure&#XA0;<a href="#figure%3Aconfig">2</a>. A configuration file consists in
+a list of <em>entries</em> separated by the character &#X2018;<span style="font-family:monospace">|</span>&#X2018;. Each
+of them is made of two parts separated by an &#X2018;<span style="font-family:monospace">-&gt;</span>&#X2018;:
+</p><ul class="itemize"><li class="li-itemize">
+The first one is a <em>regular expression</em>. Regular
+expression are enclosed within double quotes and have the same
+syntax as in Gnu Emacs. &#X2018;<span style="font-family:monospace">headache</span>&#X2018; determines file types according to
+file basenames; thus, each file is dealt with using the first line
+its name matches.
+</li><li class="li-itemize">The second one describes the format of headers for files of this
+type. It consists of the name of a <em>model</em> (e.g. 
+&#X2018;<span style="font-family:monospace">frame</span>&#X2018;), possibly followed by a list of arguments. Arguments
+are named: &#X2018;<span style="font-family:monospace">open:"(*"</span>&#X2018; means that the value of the argument
+&#X2018;<span style="font-family:monospace">open</span>&#X2018; is &#X2018;<span style="font-family:monospace">(*</span>&#X2018;.
+</li></ul><p>
+&#X2018;<span style="font-family:monospace">headache</span>&#X2018; currently supports three <em>models</em>:
+</p><ul class="itemize"><li class="li-itemize">
+&#X2018;<span style="font-family:monospace">frame</span>&#X2018;. With this model, headers are generated in a
+frame. This model requires three arguments: &#X2018;<span style="font-family:monospace">open</span>&#X2018; and
+&#X2018;<span style="font-family:monospace">close</span>&#X2018; (the opening and closing sequences for comments) and
+&#X2018;<span style="font-family:monospace">line</span>&#X2018; (the character used to make the horizontal lines of the
+frame). Two optional arguments may be used &#X2018;<span style="font-family:monospace">margin</span>&#X2018; (a string
+printed between the left and right side of the frame and the border,
+by default two spaces) and &#X2018;<span style="font-family:monospace">width</span>&#X2018; (the width of the inside of
+the frame, default is 68).
+</li><li class="li-itemize">&#X2018;<span style="font-family:monospace">lines</span>&#X2018;. Headers are typeset between two lines. Three
+arguments must be provided: &#X2018;<span style="font-family:monospace">open</span>&#X2018; and &#X2018;<span style="font-family:monospace">close</span>&#X2018; (the
+opening and closing sequences for comments), &#X2018;<span style="font-family:monospace">line</span>&#X2018; (the
+character used to make the horizontal lines). Three optional
+arguments are allowed: &#X2018;<span style="font-family:monospace">begin</span>&#X2018; (a string typeset at the
+beginning of each line, by default two spaces), &#X2018;<span style="font-family:monospace">last</span>&#X2018; (a
+string typeset at the beginning of the last line) and &#X2018;<span style="font-family:monospace">width</span>&#X2018;
+(the width of the lines, default is 70).
+</li><li class="li-itemize">&#X2018;<span style="font-family:monospace">no</span>&#X2018;. This model generates no header and has no argument.
+</li></ul><p>It is possible to change the default builtin configuration file at
+compile time. For this, just edit the file &#X2018;<span style="font-family:monospace">config_builtin</span>&#X2018;
+present in the source distribution before building the software.</p><blockquote class="figure"><div class="center"><hr style="width:80%;height:2"></div>
+<table style="border:1px;border-spacing:0" class="cellpadding1"><tr><td style="text-align:left"><pre class="verbatim">
+# Objective Caml source
   ".*\\.ml[il]?" -&gt; frame open:"(*" line:"*" close:"*)"
+| ".*\\.fml[i]?" -&gt; frame open:"(*" line:"*" close:"*)"
 | ".*\\.mly"     -&gt; frame open:"/*" line:"*" close:"*/"
 # C source
-| ".*\\.[ch]"    -&gt; frame open:"/*" line:"*" close:"*/"
+| ".*\\.[chy]"    -&gt; frame open:"/*" line:"*" close:"*/"
+# Latex
+| ".*\\.tex"     -&gt; frame open:"%"  line:"%" close:"%"
 # Misc
 | ".*Makefile.*" -&gt; frame open:"#"  line:"#" close:"#"
 | ".*README.*"   -&gt; frame open:"*"  line:"*" close:"*"
 | ".*LICENSE.*"  -&gt; frame open:"*"  line:"*" close:"*"
-</PRE></TD>
-</TR></TABLE></DIV>
- <BR>
-<DIV ALIGN=center>Figure 2: The default builtin configuration file</DIV><BR>
-
- <A NAME="figure:config"></A>
-<DIV ALIGN=center><HR WIDTH="80%" SIZE=2></DIV></BLOCKQUOTE>
+</pre></td></tr>
+</table>
+<div class="caption"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="vertical-align:top;text-align:left;" >Figure 2: The default builtin configuration file</td></tr>
+</table></div>
+<a id="figure:config"></a>
+<div class="center"><hr style="width:80%;height:2"></div></blockquote><p>It is also possible to add entries into your own configuration file that
+specify when the first line of the processed file has to be skipped.
+As previously, these <em>entries</em> are separated by the character &#X2018;<span style="font-family:monospace">|</span>&#X2018;
+and each of them is made of two parts separated by an &#X2018;<span style="font-family:monospace">-&gt;</span>&#X2018;:
+</p><ul class="itemize"><li class="li-itemize">
+Again, the first part is a <em>regular expression</em> used by &#X2018;<span style="font-family:monospace">headache</span>&#X2018;
+to determine the file type. But here, it is according to
+its full filename (including the pathname).
+</li><li class="li-itemize">The second part specifies when the first line must be skipped.
+It consists of the keyword &#X2018;<span style="font-family:monospace">skip</span>&#X2018; followed by the named
+argument &#X2018;<span style="font-family:monospace">match:</span>&#X2018; a <em>regular expression</em>.
+When the first line of such a file type matches,
+&#X2018;<span style="font-family:monospace">headache</span>&#X2018; does not modify that line and considers that the header must
+start at the second line.
+</li></ul><blockquote class="figure"><div class="center"><hr style="width:80%;height:2"></div>
+<table style="border:1px;border-spacing:0" class="cellpadding1"><tr><td style="text-align:left"><pre class="verbatim"># Script file
+| ".*\\.sh" -&gt; frame open:"#"  line:"#" close:"#"
+| ".*\\.sh" -&gt; skip match:"#!.*"
+</pre></td></tr>
+</table>
+<div class="caption"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="vertical-align:top;text-align:left;" >Figure 3: Example of a configuration file for skipping the shebang line of shell scripts</td></tr>
+</table></div>
+<a id="figure:example"></a>
+<div class="center"><hr style="width:80%;height:2"></div></blockquote><!--CUT END -->
 <!--HTMLFOOT-->
 <!--ENDHTML-->
 <!--FOOTER-->
-<HR SIZE=2>
-<BLOCKQUOTE><EM>This document was translated from L<sup>A</sup>T<sub>E</sub>X by
-</EM><A HREF="http://pauillac.inria.fr/~maranget/hevea/index.html"><EM>H<FONT SIZE=2><sup>E</sup></FONT>V<FONT SIZE=2><sup>E</sup></FONT>A</EM></A><EM>.
-</EM></BLOCKQUOTE>
-</BODY>
-</HTML>
+<hr style="height:2"><blockquote class="quote"><em>This document was translated from L<sup>A</sup>T<sub>E</sub>X by
+</em><a href="http://hevea.inria.fr/index.html"><em>H</em><em><span style="font-size:small"><sup>E</sup></span></em><em>V</em><em><span style="font-size:small"><sup>E</sup></span></em><em>A</em></a><em>.</em></blockquote></body>
+</html>
