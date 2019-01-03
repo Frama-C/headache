@@ -26,7 +26,8 @@ let string_length s =
 (** {2 Headers generators} *)
 
 type generator =
-    { remove: in_channel -> string;
+    { extract: in_channel -> unit;
+      remove: in_channel -> string;
       create: out_channel -> string list -> int -> unit;
     }
 
@@ -76,7 +77,43 @@ let make_frame ~open_comment ~close_comment ~line_char ~margin ~width =
   let regexp_header =
     Str.regexp_string (sprintf "%s%s" open_comment (String.make 10 line_char))
   in
-  let regexp_blank = Str.regexp "^[ ]*$" in
+  let regexp_blank = Str.regexp "^[ ]*[\r]?$" in
+  let regexp_extra = Str.regexp "[ \r]+$" in
+  let regexp_margin = Str.regexp ("^" ^ margin) in
+
+  let regexp_open = Str.regexp ("^" ^ (Str.quote open_comment)) in
+  let len_open = String.length open_comment in
+  let len_close = String.length close_comment in
+
+  let extract ic =
+    try
+      let line = input_line ic in
+      if Str.string_match regexp_header line 0
+      then begin
+	while 
+	  let line = input_line ic in
+	  let b = not (Str.string_match regexp_blank line 0) in
+	  if b && not (Str.string_match regexp_header line 0) then
+	      begin
+		let len = String.length line in
+		let s =
+		  if (len >= len_open+len_close) &&
+		    (Str.string_match regexp_open line 0)
+		  then
+		    String.sub line len_open (len-(len_open+len_close))
+		  else
+		    line
+		in
+		let s = Str.replace_first regexp_margin "" s in
+		let s = Str.global_replace regexp_extra "" s in
+		Format.printf "%s@."  s
+	      end;
+	  b
+	do () done;
+      end
+    with End_of_file -> 
+      ()
+  in
 
   let remove ic =
     try
@@ -104,7 +141,7 @@ let make_frame ~open_comment ~close_comment ~line_char ~margin ~width =
       output_string oc open_comment;
       output_string oc margin;
       output_string oc string;
-      output oc white 0 (max 0 (real_width - string_length string));
+      output_substring oc white 0 (max 0 (real_width - string_length string));
       output_string oc margin;
       output_string oc close_comment;
       output_char oc '\n'
@@ -113,7 +150,8 @@ let make_frame ~open_comment ~close_comment ~line_char ~margin ~width =
     Printf.fprintf oc "%s%s%s\n\n" open_comment line close_comment
   in
 
-  { remove = remove;
+  { extract = extract;
+    remove = remove;
     create = create
   }
 
@@ -142,6 +180,27 @@ let make_lines ~open_comment ~close_comment ~line_char ~begin_line
   in
 
   let regexp_blank = Str.regexp "^[ ]*$" in
+
+  let extract ic =
+    try
+      let line = input_line ic in
+      if Str.string_match regexp_begin line 0
+      then begin
+	while
+          let s = input_line ic in
+	  let b =
+            not (Str.string_match regexp_end s
+                   (max 0 (string_length s - end_length))) in
+	  if b then
+           Format.printf "%s@." s;
+	  b
+	  
+        do () done;
+	()
+      end
+    with End_of_file -> 
+      ()
+  in
 
   let remove ic =
     try
@@ -181,7 +240,8 @@ let make_lines ~open_comment ~close_comment ~line_char ~begin_line
 
   in
 
-  { remove = remove;
+  { extract = extract;
+    remove = remove;
     create = create
   }
 
@@ -200,7 +260,8 @@ let _ =
 
 let make_no () =
 
-  { remove = (fun _ -> "");
+  { extract = (fun _ -> ());
+    remove = (fun _ -> "");
     create = (fun _ _ _ -> ())
   }
 

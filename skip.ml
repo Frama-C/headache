@@ -26,25 +26,26 @@ let skip skip_lst ic oc =
       LargeFile.pos_in ic
     in
     try
-      let line = 
+      let line =
         input_line ic
       in
       try
         let _ =
-          List.find 
+          List.find
             (fun (_, rg_skip) -> Str.string_match rg_skip line 0)
             skip_lst
         in
-          prerr_endline 
+          prerr_endline
             ("Line : "^line^" skipped");
-          output_string oc line;
-          output_string oc "\n"
+          match oc with
+          | None -> ()
+          | Some oc ->
+            output_string oc line;
+            output_string oc "\n"
       with Not_found ->
         LargeFile.seek_in ic initial_pos
     with End_of_file ->
       ()
   in
     skip_aux ()
-;; 
-
-
+;;

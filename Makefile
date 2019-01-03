@@ -15,7 +15,7 @@
 
 OCAMLBUILD = ocamlbuild -package camomile -package unix -package str
 
-.PHONY: headache mkconfig clean install bootstrap
+.PHONY: headache mkconfig clean install bootstrap test
 
 headache: config_builtin.ml
 	$(OCAMLBUILD) headache.native
@@ -23,10 +23,14 @@ headache: config_builtin.ml
 mkconfig:
 	$(OCAMLBUILD) mkconfig.native
 
+config_builtin.ml: config_builtin.txt mkconfig
+	_build/mkconfig.native
+
 clean::
 	$(OCAMLBUILD) -clean
-	rm -f config_builtin.ml
+	rm -f config_builtin.ml example.txt
 
+# install
 install:
 ifndef INSTALLDIR
 	$(error "Please define INSTALLDIR.")
@@ -35,11 +39,14 @@ else
 	cp -f _build/headache.native $(INSTALLDIR)/headache
 endif
 
+# test
 bootstrap: headache
 	_build/headache.native -h example $(filter-out config_builtin.ml, $(wildcard *.ml*)) Makefile doc-src/Makefile doc-src/manual.tex
 
-config_builtin.ml: config_builtin.txt mkconfig
-	_build/mkconfig.native
+test: bootstrap
+	_build/headache.native -e Makefile > example.txt
+	diff -q example example.txt
+	rm -f example.txt
 
 # documentation
 ifndef DOC_INSTALLDIR

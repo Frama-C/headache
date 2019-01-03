@@ -1,6 +1,6 @@
 opam-version: "2.0"
 name: "headache"
-version: "1.03-utf8"
+version: "1.04"
 
 license: "GNU Library General Public License"
 

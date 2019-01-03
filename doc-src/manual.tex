@@ -127,6 +127,13 @@ Similarly, running:
 removes any existing in files \mytt{foo.c}, \mytt{bar.ml} and
 \mytt{bar.mli}.  Files which do not have a header are kept unchanged.
 
+The current headers of files can be extracted:
+\begin{alltt}
+  headache -e foo.c bar.ml bar.mli
+\end{alltt}
+prints on the standard output the current headers of the files \mytt{foo.c},
+\mytt{bar.ml} and \mytt{bar.mli}. All files are kept unchanged.
+
 \begin{figure}
 %BEGIN LATEX
 \begin{center}
@@ -138,7 +145,7 @@ removes any existing in files \mytt{foo.c}, \mytt{bar.ml} and
 
         Vincent Simonet, Projet Cristal, INRIA Rocquencourt
 
-Copyright 2002 
+Copyright 2002
 Institut National de Recherche en Informatique et en Automatique.
 All rights reserved.  This file is distributed under the terms of
 the GNU Library General Public License.
@@ -202,6 +209,7 @@ of them is made of two parts separated by an \mytt{->}:
   (the width of the lines, default is 70).
 \item \mytt{no}.  This model generates no header and has no argument.
 \end{itemize}
+
 
 It is possible to change the default builtin configuration file at
 compile time.  For this, just edit the file \mytt{config\_builtin.txt}
@@ -271,4 +279,3 @@ and each of them is made of two parts separated by an \mytt{->}:
 %%% mode: latex
 %%% TeX-master: t
 %%% End:
-

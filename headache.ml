@@ -13,7 +13,6 @@
 (*                                                                        *)
 (**************************************************************************)
 
-open CamomileLibrary
 open Printf
 open Config_builtin
 
@@ -142,6 +141,10 @@ let pipe_file f filename =
   Sys.remove filename;
   Sys.rename tempname filename
 
+let rd_pipe_file f filename =
+  let ic = open_in filename in
+  f ic;
+  close_in ic
 
 let copy ic oc =
   let len = 256 in
@@ -159,9 +162,9 @@ let create_header header header_width filename =
   let generator = find_generator filename in
   let skip_lst = find_skips filename in
   pipe_file (fun ic oc ->
-    let () = Skip.skip skip_lst ic oc in
+    let () = Skip.skip skip_lst ic (Some oc) in
     let line = generator.Model.remove ic in
-    let () = Skip.skip skip_lst ic oc in
+    let () = Skip.skip skip_lst ic (Some oc) in
     generator.Model.create oc header header_width;
     output_string oc line;
     copy ic oc
@@ -173,11 +176,20 @@ let remove_header filename =
   let generator = find_generator filename in
   let skip_lst = find_skips filename in
   pipe_file (fun ic oc ->
-    let () = Skip.skip skip_lst ic oc in
+    let () = Skip.skip skip_lst ic (Some oc) in
     let line = generator.Model.remove ic in
-    let () = Skip.skip skip_lst ic oc in
+    let () = Skip.skip skip_lst ic (Some oc) in
     output_string oc line;
     copy ic oc
+  ) filename
+
+
+let extract_header filename =
+  let generator = find_generator filename in
+  let skip_lst = find_skips filename in
+  rd_pipe_file (fun ic ->
+    let () = Skip.skip skip_lst ic None in
+    generator.Model.extract ic
   ) filename
 
 
@@ -190,6 +202,7 @@ let remove_header filename =
 type action =
     Create of string list * int
   | Remove
+  | Extract
 
 
 let main () =
@@ -200,6 +213,7 @@ let main () =
     match !action with
       Create (header, header_width) -> create_header header header_width filename
     | Remove -> remove_header filename
+    | Extract -> extract_header filename
   in
 
   Arg.parse [
@@ -215,6 +229,10 @@ let main () =
   "-r",
   Arg.Unit (fun () -> action := Remove),
   "               Remove headers in files";
+
+  "-e",
+  Arg.Unit (fun () -> action := Extract),
+  "               Extract headers from files";
 
   ]
 
