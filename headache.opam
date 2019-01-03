@@ -10,7 +10,15 @@ Lightweight tool for managing headers in source code files. It can
 update in any source code files (OCaml, C, XML et al).
 """
 
-authors: [ "Vincent Simonet" ]
+authors: [
+  "Vincent Simonet"
+  # contributors
+  "Patrick Baudin"
+  "Mehdi Dogguy"
+  "François Pottier"
+  "Virgile Prevosto"
+  "Ralf Treinen"
+]
 
 maintainer: "Patrick Baudin"
 homepage: "https://github.com/frama-c/headache/"
