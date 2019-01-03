@@ -113,14 +113,19 @@ automatically removed.</p><p>Similarly, running:
   headache -r foo.c bar.ml bar.mli
 </pre><p>
 removes any existing in files &#X2018;<span style="font-family:monospace">foo.c</span>&#X2018;, &#X2018;<span style="font-family:monospace">bar.ml</span>&#X2018; and
-&#X2018;<span style="font-family:monospace">bar.mli</span>&#X2018;. Files which do not have a header are kept unchanged.</p><blockquote class="figure"><div class="center"><hr style="width:80%;height:2"></div>
+&#X2018;<span style="font-family:monospace">bar.mli</span>&#X2018;. Files which do not have a header are kept unchanged.</p><p>The current headers of files can be extracted:
+</p><pre>
+  headache -e foo.c bar.ml bar.mli
+</pre><p>
+prints on the standard output the current headers of the files &#X2018;<span style="font-family:monospace">foo.c</span>&#X2018;,
+&#X2018;<span style="font-family:monospace">bar.ml</span>&#X2018; and &#X2018;<span style="font-family:monospace">bar.mli</span>&#X2018;. All files are kept unchanged.</p><blockquote class="figure"><div class="center"><hr style="width:80%;height:2"></div>
 <table style="border:1px;border-spacing:0" class="cellpadding1"><tr><td style="text-align:left"><pre class="verbatim">
                              Headache
                Automatic generation of files headers
 
         Vincent Simonet, Projet Cristal, INRIA Rocquencourt
 
-Copyright 2002 
+Copyright 2002
 Institut National de Recherche en Informatique et en Automatique.
 All rights reserved.  This file is distributed under the terms of
 the GNU Library General Public License.
@@ -176,7 +181,7 @@ string typeset at the beginning of the last line) and &#X2018;<span style="font-
 (the width of the lines, default is 70).
 </li><li class="li-itemize">&#X2018;<span style="font-family:monospace">no</span>&#X2018;. This model generates no header and has no argument.
 </li></ul><p>It is possible to change the default builtin configuration file at
-compile time. For this, just edit the file &#X2018;<span style="font-family:monospace">config_builtin</span>&#X2018;
+compile time. For this, just edit the file &#X2018;<span style="font-family:monospace">config_builtin.txt</span>&#X2018;
 present in the source distribution before building the software.</p><blockquote class="figure"><div class="center"><hr style="width:80%;height:2"></div>
 <table style="border:1px;border-spacing:0" class="cellpadding1"><tr><td style="text-align:left"><pre class="verbatim">
 # Objective Caml source

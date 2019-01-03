@@ -85,6 +85,12 @@ existing ones are automatically removed.
 >>
    removes any existing in files `foo.c`, `bar.ml` and `bar.mli`. Files
 which do not have a header are kept unchanged.
+  The current headers of files can be extracted: 
+<<
+    headache -e foo.c bar.ml bar.mli
+>>
+   prints on the standard output the current headers of the files
+`foo.c`, `bar.ml` and `bar.mli`. All files are kept unchanged.
           ------------------------------------------------------
     
    <<
@@ -93,7 +99,7 @@ which do not have a header are kept unchanged.
      
              Vincent Simonet, Projet Cristal, INRIA Rocquencourt
      
-     Copyright 2002 
+     Copyright 2002
      Institut National de Recherche en Informatique et en Automatique.
      All rights reserved.  This file is distributed under the terms of
      the GNU Library General Public License.
@@ -152,8 +158,8 @@ separated by an `->`:
    - `no`. This model generates no header and has no argument. 
   
   It is possible to change the default builtin configuration file at
-compile time. For this, just edit the file `config_builtin` present in
-the source distribution before building the software.
+compile time. For this, just edit the file `config_builtin.txt` present
+in the source distribution before building the software.
           ------------------------------------------------------
     
    <<
