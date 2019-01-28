@@ -21,16 +21,17 @@ authors: [
 ]
 
 maintainer: "Patrick Baudin"
-homepage: "https://github.com/frama-c/headache/"
-bug-reports: "https://github.com/frama-c/headache/issues"
+homepage: "https://github.com/Frama-C/headache/"
+bug-reports: "https://github.com/Frama-C/headache/issues"
+dev-repo: "git+https://github.com/Frama-C/headache.git"
 
 depends: [
   "camomile"
-  "ocamlbuild" {build}
+  "dune" {build}
 ]
 
 build: [
-  [make]
+  [ "dune" "build" "-p" "headache" ]
 ]
 
 install:  [

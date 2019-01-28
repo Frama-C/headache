@@ -13,22 +13,13 @@
 #                                                                        #
 ##########################################################################
 
-OCAMLBUILD = ocamlbuild -package camomile -package unix -package str
+.PHONY: headache clean install test
 
-.PHONY: headache mkconfig clean install bootstrap test
-
-headache: config_builtin.ml
-	$(OCAMLBUILD) headache.native
-
-mkconfig:
-	$(OCAMLBUILD) mkconfig.native
-
-config_builtin.ml: config_builtin.txt mkconfig
-	_build/mkconfig.native
+headache:
+	dune build
 
 clean::
-	$(OCAMLBUILD) -clean
-	rm -f config_builtin.ml example.txt
+	dune clean
 
 # install
 install:
@@ -36,15 +27,15 @@ ifndef INSTALLDIR
 	$(error "Please define INSTALLDIR.")
 else
 	mkdir -p $(INSTALLDIR)
-	cp -f _build/headache.native $(INSTALLDIR)/headache
+	cp -f _build/install/default/bin/headache $(INSTALLDIR)/headache
 endif
 
 # test
 bootstrap: headache
-	_build/headache.native -h example $(filter-out config_builtin.ml, $(wildcard *.ml*)) Makefile doc-src/Makefile doc-src/manual.tex
+	dune exec -- headache -h example $(filter-out config_builtin.ml, $(wildcard *.ml*)) Makefile doc-src/Makefile doc-src/manual.tex
 
 test: bootstrap
-	_build/headache.native -e Makefile > example.txt
+	dune exec -- headache -e Makefile > example.txt
 	diff -q example example.txt
 	rm -f example.txt
 

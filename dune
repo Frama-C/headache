@@ -1,0 +1,32 @@
+(library
+     (name headache)
+     (modules Model Config_lex Config_parse Config Info Skip)
+     (libraries camomile str bytes)
+)
+
+(ocamllex config_lex)
+(ocamlyacc config_parse)
+
+(executable
+     (name mkconfig)
+     (modules Mkconfig)
+     (libraries headache)
+)
+
+(rule
+    (targets config_builtin.ml)
+    (deps mkconfig.exe config_builtin.txt)
+    (action (run ./mkconfig.exe))
+)
+
+(executable
+      (name headache_tool)
+      (public_name headache)
+      (modules Headache_tool Config_builtin)
+      (libraries headache unix)
+)
+
+(install
+   (section doc)
+   (files "doc/manual.pdf" "doc/manual.html" "doc/manual.txt")
+)

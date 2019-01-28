@@ -14,6 +14,7 @@
 (**************************************************************************)
 
 open Printf
+open Headache
 
 let file_in = "config_builtin.txt"
 let file_out = "config_builtin.ml"
