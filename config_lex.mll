@@ -30,16 +30,17 @@ let reset_string_buffer () =
   string_index := 0
 
 let store_string_char c =
-  if !string_index >= String.length (!string_buff) then begin
-    let new_buff = Bytes.create (String.length (!string_buff) * 2) in
-      String.blit (!string_buff) 0 new_buff 0 (String.length (!string_buff));
+  let len = Bytes.length (!string_buff) in
+  if !string_index >= len then begin
+    let new_buff = Bytes.create (len * 2) in
+      Bytes.blit (!string_buff) 0 new_buff 0 len;
       string_buff := new_buff
   end;
-  Bytes.unsafe_set (!string_buff) (!string_index) c;
+  Bytes.set (!string_buff) (!string_index) c;
   incr string_index
 
 let get_stored_string () =
-  let s = String.sub (!string_buff) 0 (!string_index) in
+  let s = Bytes.sub (!string_buff) 0 (!string_index) in
   string_buff := initial_string_buffer;
   s
 
@@ -105,7 +106,7 @@ rule token = parse
         string lexbuf;
         lexbuf.Lexing.lex_start_pos <-
           string_start - lexbuf.Lexing.lex_abs_pos;
-        STRING (get_stored_string()) }
+        STRING (Bytes.to_string (get_stored_string())) }
   | eof
       { EOF }
   | _
