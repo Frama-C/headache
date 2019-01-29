@@ -36,8 +36,8 @@ information.
   
   Building `headache` requires Objective Caml (version 3.06 or up,
 available at http://caml.inria.fr/) and GNU Make. In addition, from
-version 1.03-utf8, the build requires the Unicode library Camomile and
-OCamlbuild.
+version 1.03-utf8, the build requires the Unicode library Camomile and,
+from version 1.04, Dune.
    
 Instructions
   
