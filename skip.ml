@@ -21,7 +21,7 @@ type regexp_skip = Str.regexp
 ;;
 
 let skip skip_lst ic oc =
-  let skip_aux () =
+  let rec skip_aux () =
     let initial_pos =
       LargeFile.pos_in ic
     in
@@ -35,13 +35,14 @@ let skip skip_lst ic oc =
             (fun (_, rg_skip) -> Str.string_match rg_skip line 0)
             skip_lst
         in
-          prerr_endline
-            ("Line : "^line^" skipped");
-          match oc with
-          | None -> ()
-          | Some oc ->
-            output_string oc line;
-            output_string oc "\n"
+        prerr_endline
+          ("Line : "^line^" skipped");
+        (match oc with
+         | None -> ()
+         | Some oc ->
+           output_string oc line;
+           output_string oc "\n");
+        skip_aux ()
       with Not_found ->
         LargeFile.seek_in ic initial_pos
     with End_of_file ->
