@@ -23,7 +23,7 @@ open Headache
 
 let generators : (Str.regexp * Model.generator) list ref = ref []
 
-let skips : (Str.regexp * Skip.regexp_skip) list ref = ref []
+let skips : (Str.regexp * Skip.param_skip) list ref = ref []
 
 let read_configfile filename =
   let ic = open_in filename in
