@@ -18,7 +18,7 @@ open Printf
 
 type entry = 
   | EntryModel of Model.generator 
-  | EntrySkip of Skip.regexp_skip list
+  | EntrySkip of Skip.param_skip list
 ;;
 
 (* Dispatch entry considering if it is a skip or a model.
@@ -47,7 +47,7 @@ let rec dispatch_entry acc_model acc_skip lst =
 %token <string> STRING
 
 %start configfile
-%type <((Str.regexp * Model.generator) list) * ((Str.regexp * Skip.regexp_skip) list)> configfile
+%type <((Str.regexp * Model.generator) list) * ((Str.regexp * Skip.param_skip) list)> configfile
 %start boot
 %type <(string * string * (string * string) list) list> boot
 
@@ -82,7 +82,14 @@ item:
       let fun_parameters (id, str) =
         if id = "match" then
           try 
-            Str.regexp ("^" ^ str ^ "$")
+            false,Str.regexp ("^" ^ str ^ "$")
+          with
+            Failure msg ->
+              raise (Config.Error (sprintf "Illegal regexp: %s" msg,
+                                   Parsing.rhs_start 1, Parsing.rhs_end 1))
+        else if id = "multiline_match" then
+          try
+            true,(Str.regexp ("^" ^ str ^ "$"))
           with
             Failure msg ->
               raise (Config.Error (sprintf "Illegal regexp: %s" msg,
