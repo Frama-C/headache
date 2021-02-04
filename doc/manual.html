@@ -1,9 +1,17 @@
 <!DOCTYPE html>
-<html >
+<html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<meta name="generator" content="hevea 2.32">
+<meta name="generator" content="hevea 2.35">
 <style type="text/css">
+.equationcontainer{position:relative;}
+.equationnumber{float:right;left:auto;position:absolute;right:0}
+.equationnumber-valign{float:right;left:auto;position:absolute;right:0;margin-top:-0.5em;}
+.floatrule{background-color: black; border: none; height: 1px; width: 80%}
+.phantom{display: inline-block; visibility: hidden}
+.hphantom{display: inline-block; height: 0; visibility: hidden}
+.vphantom{display: inline-block; visibility: hidden; width: 0}
+.smash{display: inline-block; height: 0; line-height: 0}
 .li-itemize{margin:1ex 0ex;}
 .li-enumerate{margin:1ex 0ex;}
 .dd-description{margin:0ex 0ex 1ex 4ex;}
@@ -14,7 +22,7 @@ div.footnotetext P{margin:0px; text-indent:1em;}
 .thefootnotes{text-align:left;margin:0ex;}
 .dt-thefootnotes{margin:0em;}
 .dd-thefootnotes{margin:0em 0em 0em 2em;}
-.footnoterule{margin:1em auto 1em 0px;width:50%;}
+.footnoterule{background-color: black; border: none; height: 1px; margin: 1em auto 1em 0px; width: 40%}
 .caption{padding-left:2ex; padding-right:2ex; margin-left:auto; margin-right:auto}
 .title{margin:2ex auto;text-align:center}
 .titlemain{margin:1ex 2ex 2ex 1ex;}
@@ -31,21 +39,32 @@ td{padding:0;}
 pre{text-align:left;margin-left:0ex;margin-right:auto;}
 blockquote{margin-left:4ex;margin-right:4ex;text-align:left;}
 td p{margin:0px;}
-.boxed{border:1px solid black}
-.textboxed{border:1px solid black}
-.vbar{border:none;width:2px;background-color:black;}
-.hbar{border:none;height:2px;width:100%;background-color:black;}
+.quote{margin-left:3em;margin-right:3em;text-align:inherit;text-indent:0pt}
+.quotation{margin-left:3em;margin-right:3em;text-align:inherit;text-indent:1.5em}
+.verse{margin-left:3em;margin-right:3em;text-indent:1.5em hanging each-line}
+.parbox{box-sizing: border-box;
+display: inline-block;
+text-indent: 0;
+}
+.rule-rect{fill: black;}
+.lrbox{box-sizing:border-box;display:inline-block;overflow:visible;white-space:nowrap;}
+.center-lrbox{display:inline-block;margin-left:50%;transform:translateX(-50%);}
+.makebox{}
+.framebox{border:1px solid black;padding:0.25em;}
+.vertical-rule{border:none;width:2px;background-color:black;}
+.horizontal-rule{border:none;background-color:black;}
+.hrule{border:none;height:2px;width:100%;background-color:black;}
 .hfill{border:none;height:1px;width:200%;background-color:black;}
-.vdisplay{border-collapse:separate;border-spacing:2px;width:auto; empty-cells:show; border:2px solid red;}
+.vdisplay{border-collapse:separate;border-spacing:2px;line-height:1.1;width:auto; empty-cells:show; border:2px solid red;}
 .vdcell{white-space:nowrap;padding:0px; border:2px solid green;}
-.display{border-collapse:separate;border-spacing:2px;width:auto; border:none;}
+.display{border-collapse:separate;border-spacing:2px;line-height:1.1;width:auto; border:none;}
 .dcell{white-space:nowrap;padding:0px; border:none;}
 .dcenter{margin:0ex auto;}
 .vdcenter{border:solid #FF8000 2px; margin:0ex auto;}
 .minipage{text-align:left; margin-left:0em; margin-right:auto;}
-.marginpar{border:solid thin black; width:20%; text-align:left;}
-.marginparleft{float:left; margin-left:0ex; margin-right:1ex;}
-.marginparright{float:right; margin-left:1ex; margin-right:0ex;}
+.marginpar{border:solid thin black; margin-bottom:1ex; width:20%; text-align:left;}
+.marginparleft{float:left; clear:left; margin-left:0ex; margin-right:1ex;}
+.marginparright{float:right; clear:right; margin-left:1ex; margin-right:0ex;}
 .theorem{text-align:left;margin:1ex auto 1ex 0ex;}
 .part{margin:2ex auto;text-align:center}
 </style>
@@ -53,26 +72,26 @@ td p{margin:0px;}
 </title>
 </head>
 <body >
-<!--HEVEA command line is: hevea -o doc-src/manual.html doc-src/manual.tex -->
+<!--HEVEA command line is: hevea -o manual.html manual.tex -->
 <!--CUT STYLE article--><!--CUT DEF section 1 --><table class="title"><tr><td style="padding:1ex"><h1 class="titlemain">&#X2018;<span style="font-family:monospace">headache</span>&#X2018;</h1><h3 class="titlerest">Vincent Simonet</h3><h3 class="titlerest">November, 2002</h3></td></tr>
 </table><p>This manual is also available in <a href="manual.txt">plain text</a>,
 <a href="manual.ps.gz">PostScript</a> and <a href="manual.pdf">PDF</a>.</p>
 <!--TOC section id="sec1" Overview-->
-<h2 id="sec1" class="section">1&#XA0;&#XA0;Overview</h2><!--SEC END --><p>It is a common usage to put at the beginning of source code files a
+<h2 id="sec1" class="section">1&#X2003;Overview</h2><!--SEC END --><p>It is a common usage to put at the beginning of source code files a
 short header giving, for instance, some copyright informations.
 &#X2018;<span style="font-family:monospace">headache</span>&#X2018; is a simple and lightweight tool for managing easily these
 headers. Among its functionalities, one may mention:
 </p><ul class="itemize"><li class="li-itemize">
 Headers must generally be generated as <em>comments</em> in source
-code files. &#X2018;<span style="font-family:monospace">headache</span>&#X2018; deals with different files types and generates
+code files. &#X2018;<span style="font-family:monospace">headache</span>&#X2018; deals with different file types and generates
 for each of them headers in an appropriate format.
-</li><li class="li-itemize">Headers automatically detects existing headers and removes them.
+</li><li class="li-itemize">&#X2018;<span style="font-family:monospace">headache</span>&#X2018; automatically detects existing headers and removes them.
 Thus, you can use it to update headers in a set of files.
 </li></ul><p>&#X2018;<span style="font-family:monospace">headache</span>&#X2018; is distributed under the terms of the <em>GNU Library General
 Public License</em>. See file &#X2018;<span style="font-family:monospace">LICENSE</span>&#X2018; of the distribution for
 more information.</p>
 <!--TOC section id="sec2" Compilation and installation-->
-<h2 id="sec2" class="section">2&#XA0;&#XA0;Compilation and installation</h2><!--SEC END --><p>Building &#X2018;<span style="font-family:monospace">headache</span>&#X2018; requires <em>Objective Caml</em> (version 3.06 or up,
+<h2 id="sec2" class="section">2&#X2003;Compilation and installation</h2><!--SEC END --><p>Building &#X2018;<span style="font-family:monospace">headache</span>&#X2018; requires <em>Objective Caml</em> (version 3.06 or up,
 available at <span style="font-family:monospace">http://caml.inria.fr/</span>) and <em>GNU Make</em>.
 In addition, from version <span style="font-family:monospace">1.03-utf8</span>, the build requires the Unicode library <em>Camomile</em> and, from version <span style="font-family:monospace">1.04</span>, <em>Dune</em>.</p>
 <!--TOC paragraph id="sec3" Instructions-->
@@ -91,18 +110,18 @@ Then the following sequence of commands should install the package:
   opam install headache
 </pre>
 <!--TOC section id="sec4" Usage-->
-<h2 id="sec4" class="section">3&#XA0;&#XA0;Usage</h2><!--SEC END --><p>Let us illustrate the use of this tool with a small example. Assume
+<h2 id="sec4" class="section">3&#X2003;Usage</h2><!--SEC END --><p>Let us illustrate the use of this tool with a small example. Assume
 you have a small project mixing C and Caml code consisting in three
 files &#X2018;<span style="font-family:monospace">foo.c</span>&#X2018;, &#X2018;<span style="font-family:monospace">bar.ml</span>&#X2018; and &#X2018;<span style="font-family:monospace">bar.mli</span>&#X2018;, and you want to
 equip them with some header. First of all, write a <em>header
 file</em>, i.e. a plain text file including the information headers
 must mention. An example of such a file is given in
-figure&#XA0;<a href="#figure%3Aheader">1</a>. In the following, we assume this file is
+figure&#X2004;&#X200D;<a href="#figure%3Aheader">1</a>. In the following, we assume this file is
 named &#X2018;<span style="font-family:monospace">myheader</span>&#X2018; and is in the same directory as source files.</p><p>Then, in order to generate headers, just run the command:
 </p><pre>
   headache -h myheader foo.c bar.ml bar.mli
 </pre><p>
-Each file is equipped with an header including the text given in the
+Each file is equipped with a header including the text given in the
 header file &#X2018;<span style="font-family:monospace">myheader</span>&#X2018;, surrounded by some extra characters
 depending on its format making it a comment (e.g. &#X2018;<span style="font-family:monospace">(*</span>&#X2018; and
 &#X2018;<span style="font-family:monospace">*)</span>&#X2018; in &#X2018;<span style="font-family:monospace">.ml</span>&#X2018; files). If you update informations in the
@@ -118,7 +137,7 @@ removes any existing in files &#X2018;<span style="font-family:monospace">foo.c<
   headache -e foo.c bar.ml bar.mli
 </pre><p>
 prints on the standard output the current headers of the files &#X2018;<span style="font-family:monospace">foo.c</span>&#X2018;,
-&#X2018;<span style="font-family:monospace">bar.ml</span>&#X2018; and &#X2018;<span style="font-family:monospace">bar.mli</span>&#X2018;. All files are kept unchanged.</p><blockquote class="figure"><div class="center"><hr style="width:80%;height:2"></div>
+&#X2018;<span style="font-family:monospace">bar.ml</span>&#X2018; and &#X2018;<span style="font-family:monospace">bar.mli</span>&#X2018;. All files are kept unchanged.</p><blockquote class="figure"><div class="center"><hr class="floatrule"></div>
 <table style="border:1px;border-spacing:0" class="cellpadding1"><tr><td style="text-align:left"><pre class="verbatim">
                              Headache
                Automatic generation of files headers
@@ -136,17 +155,17 @@ Vincent.Simonet@inria.fr           http://cristal.inria.fr/~simonet/
 <div class="caption"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="vertical-align:top;text-align:left;" >Figure 1: An example of header file</td></tr>
 </table></div>
 <a id="figure:header"></a>
-<div class="center"><hr style="width:80%;height:2"></div></blockquote>
+<div class="center"><hr class="floatrule"></div></blockquote>
 <!--TOC section id="sec5" Configuration file-->
-<h2 id="sec5" class="section">4&#XA0;&#XA0;Configuration file</h2><!--SEC END --><p>File types and format of header may be specified by a
+<h2 id="sec5" class="section">4&#X2003;Configuration file</h2><!--SEC END --><p>File types and format of header may be specified by a
 <em>configuration file</em>. By default, the default builtin
-configuration file given in figure&#XA0;<a href="#figure%3Aconfig">2</a> is used. You
+configuration file given in figure&#X2004;&#X200D;<a href="#figure%3Aconfig">2</a> is used. You
 can also use your own configuration file thanks to the &#X2018;<span style="font-family:monospace">-c</span>&#X2018;
 option:
 </p><pre>
   headache -c myconfig -h myheader foo.c bar.ml bar.mli
 </pre><p>In order to write your own configuration, you can follow the example
-given in figure&#XA0;<a href="#figure%3Aconfig">2</a>. A configuration file consists in
+given in figure&#X2004;&#X200D;<a href="#figure%3Aconfig">2</a>. A configuration file consists in
 a list of <em>entries</em> separated by the character &#X2018;<span style="font-family:monospace">|</span>&#X2018;. Each
 of them is made of two parts separated by an &#X2018;<span style="font-family:monospace">-&gt;</span>&#X2018;:
 </p><ul class="itemize"><li class="li-itemize">
@@ -167,7 +186,7 @@ are named: &#X2018;<span style="font-family:monospace">open:"(*"</span>&#X2018; 
 frame. This model requires three arguments: &#X2018;<span style="font-family:monospace">open</span>&#X2018; and
 &#X2018;<span style="font-family:monospace">close</span>&#X2018; (the opening and closing sequences for comments) and
 &#X2018;<span style="font-family:monospace">line</span>&#X2018; (the character used to make the horizontal lines of the
-frame). Two optional arguments may be used &#X2018;<span style="font-family:monospace">margin</span>&#X2018; (a string
+frame). Two optional arguments may be used: &#X2018;<span style="font-family:monospace">margin</span>&#X2018; (a string
 printed between the left and right side of the frame and the border,
 by default two spaces) and &#X2018;<span style="font-family:monospace">width</span>&#X2018; (the width of the inside of
 the frame, default is 68).
@@ -182,7 +201,7 @@ string typeset at the beginning of the last line) and &#X2018;<span style="font-
 </li><li class="li-itemize">&#X2018;<span style="font-family:monospace">no</span>&#X2018;. This model generates no header and has no argument.
 </li></ul><p>It is possible to change the default builtin configuration file at
 compile time. For this, just edit the file &#X2018;<span style="font-family:monospace">config_builtin.txt</span>&#X2018;
-present in the source distribution before building the software.</p><blockquote class="figure"><div class="center"><hr style="width:80%;height:2"></div>
+present in the source distribution before building the software.</p><blockquote class="figure"><div class="center"><hr class="floatrule"></div>
 <table style="border:1px;border-spacing:0" class="cellpadding1"><tr><td style="text-align:left"><pre class="verbatim">
 # Objective Caml source
   ".*\\.ml[il]?" -&gt; frame open:"(*" line:"*" close:"*)"
@@ -201,33 +220,56 @@ present in the source distribution before building the software.</p><blockquote 
 <div class="caption"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="vertical-align:top;text-align:left;" >Figure 2: The default builtin configuration file</td></tr>
 </table></div>
 <a id="figure:config"></a>
-<div class="center"><hr style="width:80%;height:2"></div></blockquote><p>It is also possible to add entries into your own configuration file that
-specify when the first line of the processed file has to be skipped.
+<div class="center"><hr class="floatrule"></div></blockquote><p>It is also possible to add entries into your own configuration file that
+specify when the initial lines of the processed file have to be skipped.
 As previously, these <em>entries</em> are separated by the character &#X2018;<span style="font-family:monospace">|</span>&#X2018;
 and each of them is made of two parts separated by an &#X2018;<span style="font-family:monospace">-&gt;</span>&#X2018;:
 </p><ul class="itemize"><li class="li-itemize">
 Again, the first part is a <em>regular expression</em> used by &#X2018;<span style="font-family:monospace">headache</span>&#X2018;
 to determine the file type. But here, it is according to
 its full filename (including the pathname).
-</li><li class="li-itemize">The second part specifies when the first line must be skipped.
-It consists of the keyword &#X2018;<span style="font-family:monospace">skip</span>&#X2018; followed by the named
-argument &#X2018;<span style="font-family:monospace">match:</span>&#X2018; a <em>regular expression</em>.
-When the first line of such a file type matches,
-&#X2018;<span style="font-family:monospace">headache</span>&#X2018; does not modify that line and considers that the header must
-start at the second line.
-</li></ul><blockquote class="figure"><div class="center"><hr style="width:80%;height:2"></div>
+</li><li class="li-itemize">The second part specifies when the initial lines must be skipped.
+It consists of the keyword &#X2018;<span style="font-family:monospace">skip</span>&#X2018; followed by one of the named
+arguments &#X2018;<span style="font-family:monospace">multiline_match:</span>&#X2018; or &#X2018;<span style="font-family:monospace">match:</span>&#X2018;, then a <em>regular expression</em>.
+As long as the lines match a &#X2018;<span style="font-family:monospace">multiline_match</span>&#X2018; parameter,
+&#X2018;<span style="font-family:monospace">headache</span>&#X2018; skips them and checks the next line.
+If the current line matches only a &#X2018;<span style="font-family:monospace">match</span>&#X2018; parameter,
+&#X2018;<span style="font-family:monospace">headache</span>&#X2018; skips the current line and breaks the iteration there (of course,
+if nothing matches, &#X2018;<span style="font-family:monospace">headache</span>&#X2018; puts the header before the current line).</li></ul><blockquote class="figure"><div class="center"><hr class="floatrule"></div>
 <table style="border:1px;border-spacing:0" class="cellpadding1"><tr><td style="text-align:left"><pre class="verbatim"># Script file
-| ".*\\.sh" -&gt; frame open:"#"  line:"#" close:"#"
-| ".*\\.sh" -&gt; skip match:"#!.*"
+ | ".*\\.sh" -&gt; frame open:"#"  line:"#" close:"#"
+ | ".*\\.sh" -&gt; skip match:"#!.*"
 </pre></td></tr>
 </table>
 <div class="caption"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="vertical-align:top;text-align:left;" >Figure 3: Example of a configuration file for skipping the shebang line of shell scripts</td></tr>
 </table></div>
 <a id="figure:example"></a>
-<div class="center"><hr style="width:80%;height:2"></div></blockquote><!--CUT END -->
+<div class="center"><hr class="floatrule"></div></blockquote><p>Figure&#X2004;&#X200D;<a href="#figure%3Aexample">3</a> shows an example of configuration file
+that can used to skip the shebang line of shell scripts:
+when the first line of &#X2018;<span style="font-family:monospace">.sh</span>&#X2018; files starts with &#X2018;<span style="font-family:monospace">#!</span>&#X2018;,
+&#X2018;<span style="font-family:monospace">headache</span>&#X2018; does not modify that line and considers that the header must
+start at the second line.</p><blockquote class="figure"><div class="center"><hr class="floatrule"></div>
+<table style="border:1px;border-spacing:0" class="cellpadding1"><tr><td style="text-align:left"><pre class="verbatim"># SWI Prolog file
+ | ".*\\.pl" -&gt; frame open:"%"  line:"%" close:"%"
+ | ".*\\.pl" -&gt; skip multiline_match:"#!.*" multiline_match:":-.*"
+</pre></td></tr>
+</table>
+<div class="caption"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="vertical-align:top;text-align:left;" >Figure 4: Example of a configuration file for skipping the shebang line,
+as well as lines containing Prolog directives, such as Unicode usage.</td></tr>
+</table></div>
+<a id="figure:python-example"></a>
+<div class="center"><hr class="floatrule"></div></blockquote><p>Figure&#X2004;&#X200D;<a href="#figure%3Apython-example">4</a> shows an example of configuration file
+that can used for &#X2018;<span style="font-family:monospace">SWI prolog</span>&#X2018; files:
+for a &#X2018;<span style="font-family:monospace">.pl</span>&#X2018; file starting with the following three first lines,
+&#X2018;<span style="font-family:monospace">headache</span>&#X2018; considers that the header must start just after the first two lines:
+</p><pre>
+  #!/usr/bin/env swipl
+  :- encoding(utf8).
+  % remainder of the file, that can be after the header
+</pre><!--CUT END -->
 <!--HTMLFOOT-->
 <!--ENDHTML-->
 <!--FOOTER-->
-<hr style="height:2"><blockquote class="quote"><em>This document was translated from L<sup>A</sup>T<sub>E</sub>X by
+<hr class="horizontal-rule" style="height:2px"><blockquote class="quote"><em>This document was translated from L<sup>A</sup>T<sub>E</sub>X by
 </em><a href="http://hevea.inria.fr/index.html"><em>H</em><em><span style="font-size:small"><sup>E</sup></span></em><em>V</em><em><span style="font-size:small"><sup>E</sup></span></em><em>A</em></a><em>.</em></blockquote></body>
 </html>
