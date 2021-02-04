@@ -243,19 +243,22 @@ present in the source distribution before building the software.
 \end{figure}
 
 It is also possible to add entries into your own configuration file that
-specify when the first line of the processed file has to be skipped.
+specify when the first lines of the processed file has to be skipped.
 As previously, these \emph{entries} are separated by the character \mytt{|}
 and each of them is made of two parts separated by an \mytt{->}:
 \begin{itemize}
 \item Again, the first part is a \emph{regular expression} used by \headache{}
   to determine the file type. But here, it is according to
   its full filename (including the pathname).
-\item The second part specifies when the first line must be skipped.
+\item The second part specifies when the first lines must be skipped.
   It consists of the keyword \mytt{skip} followed by the named
-  argument \mytt{match:} a \emph{regular expression}.
-  When the first line of such a file type matches,
-  \headache{} does not modify that line and considers that the header must
-  start at the second line.
+  argument \mytt{multiline\_match:} or \mytt{match:} a \emph{regular expression}.
+  As long as the lines match a \mytt{multiline\_match} parameter,
+  \headache{} skips them and checks the next line.
+  If the current line matches only a \mytt{match} parameter,
+  \headache{} skips the current line and breaks the iteration there (of course,
+  if nothing matches, \headache{} puts the header before the current line).
+
 \end{itemize}
 
 \begin{figure}
@@ -264,8 +267,8 @@ and each of them is made of two parts separated by an \mytt{->}:
 %END LATEX
 \begin{boxedverbatim}
 # Script file
-| ".*\\.sh" -> frame open:"#"  line:"#" close:"#"
-| ".*\\.sh" -> skip match:"#!.*"
+ | ".*\\.sh" -> frame open:"#"  line:"#" close:"#"
+ | ".*\\.sh" -> skip match:"#!.*"
 \end{boxedverbatim}
 %BEGIN LATEX
 \end{center}
@@ -273,6 +276,38 @@ and each of them is made of two parts separated by an \mytt{->}:
   \caption{Example of a configuration file for skipping the shebang line of shell scripts}
   \label{figure:example}
 \end{figure}
+
+The figure~\ref{figure:example} shows an example of configuration file
+that can used to skip the shebang line of shell scripts:
+when the first line of \mytt{.sh} files starts with \mytt{\#!},
+\headache{} does not modify that line and considers that the header must
+start at the second line.
+
+\begin{figure}
+%BEGIN LATEX
+\begin{center}
+%END LATEX
+\begin{boxedverbatim}
+# SWI Prolog file
+ | ".*\\.pl" -> frame open:"#"  line:"#" close:"#"
+ | ".*\\.pl" -> skip multiline_match:"#!.*" multiline_match:":-.*"
+\end{boxedverbatim}
+%BEGIN LATEX
+\end{center}
+%END LATEX
+  \caption{Example of a configuration file for skipping the shebang line and some other lines}
+  \label{figure:python-example}
+\end{figure}
+
+The figure~\ref{figure:python-example} shows an example of configuration file
+that can used for \mytt{SWI prolog} files:
+a \mytt{.pl} file starting with the following three first lines,
+\headache{} considers that the header must start just after the two first lines:
+\begin{alltt}
+  #!/usr/bin/env swipl
+  :- encoding(utf8).
+  % remainder of the file, that can be after the header
+\end{alltt}
 
 \end{document}
 %%% Local Variables:
