@@ -5,42 +5,42 @@
                             ===============
                              November, 2002
                              ==============
-  
+
   This manual is also available in plain text (1), PostScript (2) and
 PDF (3).
 
 
-1  Overview
-*=*=*=*=*=*
+1 Overview
+*=*=*=*=*=
 
-  
+
   It is a common usage to put at the beginning of source code files a
 short header giving, for instance, some copyright informations.
 `headache` is a simple and lightweight tool for managing easily these
 headers. Among its functionalities, one may mention: 
-  
+
    - Headers must generally be generated as comments in source code
-   files. `headache` deals with different files types and generates for
+   files. `headache` deals with different file types and generates for
    each of them headers in an appropriate format. 
-   - Headers automatically detects existing headers and removes them.
+   - `headache` automatically detects existing headers and removes them.
    Thus, you can use it to update headers in a set of files. 
-  
+
   `headache` is distributed under the terms of the GNU Library General
 Public License. See file `LICENSE` of the distribution for more
 information.
 
 
-2  Compilation and installation
-*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+2 Compilation and installation
+*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=
 
-  
+
   Building `headache` requires Objective Caml (version 3.06 or up,
 available at http://caml.inria.fr/) and GNU Make. In addition, from
 version 1.03-utf8, the build requires the Unicode library Camomile and,
 from version 1.04, Dune.
-   
+
 Instructions
-  
+
 <<
     make && sudo make INSTALLDIR=/usr/local/bin install
 >>
@@ -55,13 +55,13 @@ Then the following sequence of commands should install the package:
     opam depext headache
     opam install headache
 >>
-  
 
 
-3  Usage
-*=*=*=*=
 
-  
+3 Usage
+*=*=*=*
+
+
   Let us illustrate the use of this tool with a small example. Assume
 you have a small project mixing C and Caml code consisting in three
 files `foo.c`, `bar.ml` and `bar.mli`, and you want to equip them with
@@ -73,7 +73,7 @@ named `myheader` and is in the same directory as source files.
 <<
     headache -h myheader foo.c bar.ml bar.mli
 >>
-   Each file is equipped with an header including the text given in the
+   Each file is equipped with a header including the text given in the
 header file `myheader`, surrounded by some extra characters depending on
 its format making it a comment (e.g. `(*` and `*)` in `.ml` files). If
 you update informations in the header file `myheader`, you simply need
@@ -91,33 +91,33 @@ which do not have a header are kept unchanged.
 >>
    prints on the standard output the current headers of the files
 `foo.c`, `bar.ml` and `bar.mli`. All files are kept unchanged.
-          ------------------------------------------------------
-    
+   --------------------------------------------------------------------
+
    <<
                                   Headache
                     Automatic generation of files headers
-     
+
              Vincent Simonet, Projet Cristal, INRIA Rocquencourt
-     
+
      Copyright 2002
      Institut National de Recherche en Informatique et en Automatique.
      All rights reserved.  This file is distributed under the terms of
      the GNU Library General Public License.
-     
+
      Vincent.Simonet@inria.fr          
    http://cristal.inria.fr/~simonet/
    >>
-    
+
      Figure 1: An example of header file
-     
-          ------------------------------------------------------
-  
+
+   --------------------------------------------------------------------
 
 
-4  Configuration file
-*=*=*=*=*=*=*=*=*=*=*
 
-  
+4 Configuration file
+*=*=*=*=*=*=*=*=*=*=
+
+
   File types and format of header may be specified by a configuration
 file. By default, the default builtin configuration file given in
 figure 2 is used. You can also use your own configuration file thanks to
@@ -125,12 +125,12 @@ the `-c` option:
 <<
     headache -c myconfig -h myheader foo.c bar.ml bar.mli
 >>
-  
+
   In order to write your own configuration, you can follow the example
 given in figure 2. A configuration file consists in a list of entries
 separated by the character `|`. Each of them is made of two parts
 separated by an `->`: 
-  
+
    - The first one is a regular expression. Regular expression are
    enclosed within double quotes and have the same syntax as in Gnu
    Emacs. `headache` determines file types according to file basenames;
@@ -140,13 +140,13 @@ separated by an `->`:
    followed by a list of arguments. Arguments are named: `open:"(*"`
    means that the value of the argument `open` is `(*`. 
    `headache` currently supports three models: 
-  
+
    - `frame`. With this model, headers are generated in a frame. This
    model requires three arguments: `open` and `close` (the opening and
    closing sequences for comments) and `line` (the character used to
    make the horizontal lines of the frame). Two optional arguments may
-   be used `margin` (a string printed between the left and right side of
-   the frame and the border, by default two spaces) and `width` (the
+   be used: `margin` (a string printed between the left and right side
+   of the frame and the border, by default two spaces) and `width` (the
    width of the inside of the frame, default is 68). 
    - `lines`. Headers are typeset between two lines. Three arguments
    must be provided: `open` and `close` (the opening and closing
@@ -156,12 +156,12 @@ separated by an `->`:
    `last` (a string typeset at the beginning of the last line) and
    `width` (the width of the lines, default is 70). 
    - `no`. This model generates no header and has no argument. 
-  
+
   It is possible to change the default builtin configuration file at
 compile time. For this, just edit the file `config_builtin.txt` present
 in the source distribution before building the software.
-          ------------------------------------------------------
-    
+   --------------------------------------------------------------------
+
    <<
      # Objective Caml source
        ".*\\.ml[il]?" -> frame open:"(*" line:"*" close:"*)"
@@ -176,43 +176,72 @@ in the source distribution before building the software.
      | ".*README.*"   -> frame open:"*"  line:"*" close:"*"
      | ".*LICENSE.*"  -> frame open:"*"  line:"*" close:"*"
    >>
-    
+
      Figure 2: The default builtin configuration file
-     
-          ------------------------------------------------------
-  
+
+   --------------------------------------------------------------------
+
   It is also possible to add entries into your own configuration file
-that specify when the first line of the processed file has to be
+that specify when the initial lines of the processed file have to be
 skipped. As previously, these entries are separated by the character `|`
 and each of them is made of two parts separated by an `->`: 
-  
+
    - Again, the first part is a regular expression used by `headache` to
    determine the file type. But here, it is according to its full
    filename (including the pathname). 
-   - The second part specifies when the first line must be skipped. It
-   consists of the keyword `skip` followed by the named argument
-   `match:` a regular expression. When the first line of such a file
-   type matches, `headache` does not modify that line and considers that
-   the header must start at the second line. 
-  
-          ------------------------------------------------------
-    
+   - The second part specifies when the initial lines must be skipped.
+   It consists of the keyword `skip` followed by one of the named
+   arguments `multiline_match:` or `match:`, then a regular expression.
+   As long as the lines match a `multiline_match` parameter, `headache`
+   skips them and checks the next line. If the current line matches only
+   a `match` parameter, `headache` skips the current line and breaks the
+   iteration there (of course, if nothing matches, `headache` puts the
+   header before the current line).
+
+   --------------------------------------------------------------------
+
    <<# Script file
-     | ".*\\.sh" -> frame open:"#"  line:"#" close:"#"
-     | ".*\\.sh" -> skip match:"#!.*"
+      | ".*\\.sh" -> frame open:"#"  line:"#" close:"#"
+      | ".*\\.sh" -> skip match:"#!.*"
    >>
-    
+
      Figure 3: Example of a configuration file for skipping the shebang
    line of shell scripts
-     
-          ------------------------------------------------------
-  
+
+   --------------------------------------------------------------------
+
+  Figure 3 shows an example of configuration file that can used to skip
+the shebang line of shell scripts: when the first line of `.sh` files
+starts with `#!`, `headache` does not modify that line and considers
+that the header must start at the second line.
+   --------------------------------------------------------------------
+
+   <<# SWI Prolog file
+      | ".*\\.pl" -> frame open:"%"  line:"%" close:"%"
+      | ".*\\.pl" -> skip multiline_match:"#!.*" multiline_match:":-.*"
+   >>
+
+     Figure 4: Example of a configuration file for skipping the shebang
+   line, as well as lines containing Prolog directives, such as Unicode
+   usage.
+
+   --------------------------------------------------------------------
+
+  Figure 4 shows an example of configuration file that can used for `SWI
+prolog` files: for a `.pl` file starting with the following three first
+lines, `headache` considers that the header must start just after the
+first two lines: 
+<<
+    #!/usr/bin/env swipl
+    :- encoding(utf8).
+    % remainder of the file, that can be after the header
+>>
+
 -----------------------------------------------------------------------
-  
    This document was translated from LaTeX by HeVeA (4).
 -----------------------------------
-  
-  
+
+
  (1) manual.txt
  (2) manual.ps.gz
  (3) manual.pdf
