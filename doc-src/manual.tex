@@ -59,9 +59,9 @@ short header giving, for instance, some copyright informations.
 headers.  Among its functionalities, one may mention:
 \begin{itemize}
 \item Headers must generally be generated as \emph{comments} in source
-  code files.  \headache{} deals with different files types and generates
+  code files.  \headache{} deals with different file types and generates
   for each of them headers in an appropriate format.
-\item Headers automatically detects existing headers and removes them.
+\item \headache{} automatically detects existing headers and removes them.
   Thus, you can use it to update headers in a set of files.
 \end{itemize}
 
@@ -112,7 +112,7 @@ Then, in order to generate headers, just run the command:
 \begin{alltt}
   headache -h myheader foo.c bar.ml bar.mli
 \end{alltt}
-Each file is equipped with an header including the text given in the
+Each file is equipped with a header including the text given in the
 header file \mytt{myheader}, surrounded by some extra characters
 depending on its format making it a comment (e.g.\ \mytt{(*} and
 \mytt{*)} in \mytt{.ml} files).  If you update informations in the
@@ -195,7 +195,7 @@ of them is made of two parts separated by an \mytt{->}:
   frame.  This model requires three arguments: \mytt{open} and
   \mytt{close} (the opening and closing sequences for comments) and
   \mytt{line} (the character used to make the horizontal lines of the
-  frame).  Two optional arguments may be used \mytt{margin} (a string
+  frame).  Two optional arguments may be used: \mytt{margin} (a string
   printed between the left and right side of the frame and the border,
   by default two spaces) and \mytt{width} (the width of the inside of
   the frame, default is 68).
@@ -243,16 +243,16 @@ present in the source distribution before building the software.
 \end{figure}
 
 It is also possible to add entries into your own configuration file that
-specify when the first lines of the processed file has to be skipped.
+specify when the initial lines of the processed file have to be skipped.
 As previously, these \emph{entries} are separated by the character \mytt{|}
 and each of them is made of two parts separated by an \mytt{->}:
 \begin{itemize}
 \item Again, the first part is a \emph{regular expression} used by \headache{}
   to determine the file type. But here, it is according to
   its full filename (including the pathname).
-\item The second part specifies when the first lines must be skipped.
-  It consists of the keyword \mytt{skip} followed by the named
-  argument \mytt{multiline\_match:} or \mytt{match:} a \emph{regular expression}.
+\item The second part specifies when the initial lines must be skipped.
+  It consists of the keyword \mytt{skip} followed by one of the named
+  arguments \mytt{multiline\_match:} or \mytt{match:}, then a \emph{regular expression}.
   As long as the lines match a \mytt{multiline\_match} parameter,
   \headache{} skips them and checks the next line.
   If the current line matches only a \mytt{match} parameter,
@@ -277,7 +277,7 @@ and each of them is made of two parts separated by an \mytt{->}:
   \label{figure:example}
 \end{figure}
 
-The figure~\ref{figure:example} shows an example of configuration file
+Figure~\ref{figure:example} shows an example of configuration file
 that can used to skip the shebang line of shell scripts:
 when the first line of \mytt{.sh} files starts with \mytt{\#!},
 \headache{} does not modify that line and considers that the header must
@@ -289,20 +289,21 @@ start at the second line.
 %END LATEX
 \begin{boxedverbatim}
 # SWI Prolog file
- | ".*\\.pl" -> frame open:"#"  line:"#" close:"#"
+ | ".*\\.pl" -> frame open:"%"  line:"%" close:"%"
  | ".*\\.pl" -> skip multiline_match:"#!.*" multiline_match:":-.*"
 \end{boxedverbatim}
 %BEGIN LATEX
 \end{center}
 %END LATEX
-  \caption{Example of a configuration file for skipping the shebang line and some other lines}
+\caption{Example of a configuration file for skipping the shebang line,
+  as well as lines containing Prolog directives, such as Unicode usage.}
   \label{figure:python-example}
 \end{figure}
 
-The figure~\ref{figure:python-example} shows an example of configuration file
+Figure~\ref{figure:python-example} shows an example of configuration file
 that can used for \mytt{SWI prolog} files:
-a \mytt{.pl} file starting with the following three first lines,
-\headache{} considers that the header must start just after the two first lines:
+for a \mytt{.pl} file starting with the following three first lines,
+\headache{} considers that the header must start just after the first two lines:
 \begin{alltt}
   #!/usr/bin/env swipl
   :- encoding(utf8).
