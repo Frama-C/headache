@@ -19,6 +19,11 @@ open Headache
 
 
 (***************************************************************************)
+(** {2 Command-line options} *)
+
+let verbose = ref false
+
+(***************************************************************************)
 (** {2 Configuration files} *)
 
 let generators : (Str.regexp * Model.generator) list ref = ref []
@@ -162,9 +167,9 @@ let create_header header header_width filename =
   let generator = find_generator filename in
   let skip_lst = find_skips filename in
   pipe_file (fun ic oc ->
-    let () = Skip.skip skip_lst ic (Some oc) in
+    let () = Skip.skip ~verbose:!verbose skip_lst ic (Some oc) in
     let line = generator.Model.remove ic in
-    let () = Skip.skip skip_lst ic (Some oc) in
+    let () = Skip.skip ~verbose:!verbose skip_lst ic (Some oc) in
     generator.Model.create oc header header_width;
     output_string oc line;
     copy ic oc
@@ -176,9 +181,9 @@ let remove_header filename =
   let generator = find_generator filename in
   let skip_lst = find_skips filename in
   pipe_file (fun ic oc ->
-    let () = Skip.skip skip_lst ic (Some oc) in
+    let () = Skip.skip ~verbose:!verbose skip_lst ic (Some oc) in
     let line = generator.Model.remove ic in
-    let () = Skip.skip skip_lst ic (Some oc) in
+    let () = Skip.skip ~verbose:!verbose skip_lst ic (Some oc) in
     output_string oc line;
     copy ic oc
   ) filename
@@ -188,7 +193,7 @@ let extract_header filename =
   let generator = find_generator filename in
   let skip_lst = find_skips filename in
   rd_pipe_file (fun ic ->
-    let () = Skip.skip skip_lst ic None in
+    let () = Skip.skip ~verbose:!verbose skip_lst ic None in
     generator.Model.extract ic
   ) filename
 
@@ -233,6 +238,10 @@ let main () =
   "-e",
   Arg.Unit (fun () -> action := Extract),
   "               Extract headers from files";
+
+  "-v",
+  Arg.Unit (fun () -> verbose := true),
+  "               Enable verbose output";
 
   ]
 
