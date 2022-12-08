@@ -24,7 +24,7 @@ type param_skip = bool * regexp_skip
 ;;
 
 
-let skip skip_lst ic oc =
+let skip ~verbose skip_lst ic oc =
   let multiple_skip_lst,simple_skip_lst =
     List.partition (fun (_,(multiple,_)) -> multiple) skip_lst
   in
@@ -50,8 +50,9 @@ let skip skip_lst ic oc =
           with Not_found ->
             match_line simple_skip_lst;
         in
-        prerr_endline
-          ("Line : "^line^" skipped");
+        if verbose then
+          prerr_endline
+            ("Line : "^line^" skipped");
         (match oc with
          | None -> ()
          | Some oc ->
