@@ -240,7 +240,7 @@ let main () =
   "               Extract headers from files";
 
   "-v",
-  Arg.Unit (fun () -> verbose := true),
+  Arg.Set verbose,
   "               Enable verbose output";
 
   ]
