@@ -2,7 +2,7 @@ opam-version: "2.0"
 name: "headache"
 version: "1.06"
 
-license: "GNU Library General Public License"
+license: "LGPL-2.0-only"
 
 synopsis: "Automatic generation of files headers"
 description: """
@@ -26,15 +26,11 @@ bug-reports: "https://github.com/Frama-C/headache/issues"
 dev-repo: "git+https://github.com/Frama-C/headache.git"
 
 depends: [
+  "ocaml" {>= "4.02"}
   "camomile"
   "dune" {>= "1.6"}
 ]
 
 build: [
-  [ "dune" "build" "-p" "headache" ]
-]
-
-install:  [
-  [make "INSTALLDIR=%{prefix}%/bin" "install"]
-  [make "DOC_INSTALLDIR=%{prefix}%/doc/headache" "install-doc"] {with-doc}
+  [ "dune" "build" "-p" name "-j" jobs ]
 ]
