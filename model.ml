@@ -13,7 +13,7 @@
 (*                                                                        *)
 (**************************************************************************)
 
-open CamomileLibrary
+open Camomile
 open Printf
 
 exception Error of string
