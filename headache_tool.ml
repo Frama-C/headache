@@ -115,7 +115,6 @@ let read_headerfile filename =
 (***************************************************************************)
 (** {2 Processing files} *)
 
-let temp_file_counter = ref 0
 let prng = Random.State.make_self_init ();;
 
 let temp_file_name directory prefix suffix =

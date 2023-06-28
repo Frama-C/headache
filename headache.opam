@@ -1,6 +1,6 @@
 opam-version: "2.0"
 name: "headache"
-version: "1.06"
+version: "1.07"
 
 license: "LGPL-2.0-only"
 
@@ -28,8 +28,8 @@ dev-repo: "git+https://github.com/Frama-C/headache.git"
 
 depends: [
   "ocaml" {>= "4.02"}
-  "camomile"
-  "dune" {>= "1.6"}
+  "camomile" {>= "2.0.0"}
+  "dune" {>= "3.4"}
 ]
 
 build: [
