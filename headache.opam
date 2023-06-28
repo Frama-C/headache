@@ -21,7 +21,7 @@ authors: [
   "Ralf Treinen"
 ]
 
-maintainer: "Patrick Baudin"
+maintainer: "frama-ci-bot@frama-c.com"
 homepage: "https://github.com/Frama-C/headache/"
 bug-reports: "https://github.com/Frama-C/headache/issues"
 dev-repo: "git+https://github.com/Frama-C/headache.git"
