@@ -1,7 +1,7 @@
 (library
      (name headache)
      (modules Model Config_lex Config_parse Config Info Skip)
-     (libraries camomile str bytes)
+     (libraries camomile str)
 )
 
 (ocamllex config_lex)
