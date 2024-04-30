@@ -136,17 +136,24 @@ let make_frame ~open_comment ~close_comment ~line_char ~margin ~width =
     let white = String.make width' ' ' in
     let line = String.make width' line_char in
     Printf.fprintf oc "%s%s%s\n" open_comment line close_comment;
-
-    List.iter (function string ->
+    let last =
+      List.fold_left (fun _ string ->
+       output_string oc open_comment;
+        output_string oc margin;
+        output_string oc string;
+        output_substring oc white 0 (max 0 (real_width - string_length string));
+        output_string oc margin;
+        output_string oc close_comment;
+        output_char oc '\n';
+        string
+      ) "" header
+    in
+    if last <> "" then begin
       output_string oc open_comment;
-      output_string oc margin;
-      output_string oc string;
-      output_substring oc white 0 (max 0 (real_width - string_length string));
-      output_string oc margin;
+      output_string oc white;
       output_string oc close_comment;
-      output_char oc '\n'
-    ) header;
-
+      output_char oc '\n';
+    end;
     Printf.fprintf oc "%s%s%s\n\n" open_comment line close_comment
   in
 
