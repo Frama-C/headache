@@ -26,10 +26,10 @@ let string_length s =
 (** {2 Headers generators} *)
 
 type generator =
-    { extract: in_channel -> unit;
-      remove: in_channel -> string;
-      create: out_channel -> string list -> int -> unit;
-    }
+  { extract: in_channel -> unit;
+    remove: in_channel -> string;
+    create: out_channel -> string list -> int -> unit;
+  }
 
 (***************************************************************************)
 (** {2 Models} *)
@@ -54,16 +54,16 @@ let arg_string args ?default name =
     List.assoc name args
   with
     Not_found ->
-      match default with
-	None -> raise (Error (sprintf "parameter %s is missing" name))
-      |	Some s -> s
+    match default with
+      None -> raise (Error (sprintf "parameter %s is missing" name))
+    |	Some s -> s
 
 let arg_int args ?default name =
   try
     int_of_string (arg_string args ?default name)
   with
     Failure _ ->
-      raise (Error (sprintf "parameter %s expects an integer" name))
+    raise (Error (sprintf "parameter %s expects an integer" name))
 
 let arg_char args ?default name =
   let s = arg_string args ?default name in
@@ -90,26 +90,26 @@ let make_frame ~open_comment ~close_comment ~line_char ~margin ~width =
       let line = input_line ic in
       if Str.string_match regexp_header line 0
       then begin
-	while 
-	  let line = input_line ic in
-	  let b = not (Str.string_match regexp_blank line 0) in
-	  if b && not (Str.string_match regexp_header line 0) then
-	      begin
-		let len = String.length line in
-		let s =
-		  if (len >= len_open+len_close) &&
-		    (Str.string_match regexp_open line 0)
-		  then
-		    String.sub line len_open (len-(len_open+len_close))
-		  else
-		    line
-		in
-		let s = Str.replace_first regexp_margin "" s in
-		let s = Str.global_replace regexp_extra "" s in
-		Format.printf "%s@."  s
-	      end;
-	  b
-	do () done;
+        while 
+          let line = input_line ic in
+          let b = not (Str.string_match regexp_blank line 0) in
+          if b && not (Str.string_match regexp_header line 0) then
+            begin
+              let len = String.length line in
+              let s =
+                if (len >= len_open+len_close) &&
+                   (Str.string_match regexp_open line 0)
+                then
+                  String.sub line len_open (len-(len_open+len_close))
+                else
+                  line
+              in
+              let s = Str.replace_first regexp_margin "" s in
+              let s = Str.global_replace regexp_extra "" s in
+              Format.printf "%s@."  s
+            end;
+          b
+        do () done;
       end
     with End_of_file -> 
       ()
@@ -120,8 +120,8 @@ let make_frame ~open_comment ~close_comment ~line_char ~margin ~width =
       let line = input_line ic in
       if Str.string_match regexp_header line 0
       then begin
-	while not (Str.string_match regexp_blank (input_line ic) 0) do () done;
-	""
+        while not (Str.string_match regexp_blank (input_line ic) 0) do () done;
+        ""
       end
       else if Str.string_match regexp_blank line 0
       then ""
@@ -136,17 +136,24 @@ let make_frame ~open_comment ~close_comment ~line_char ~margin ~width =
     let white = String.make width' ' ' in
     let line = String.make width' line_char in
     Printf.fprintf oc "%s%s%s\n" open_comment line close_comment;
-
-    List.iter (function string ->
+    let last =
+      List.fold_left (fun _ string ->
+          output_string oc open_comment;
+          output_string oc margin;
+          output_string oc string;
+          output_substring oc white 0 (max 0 (real_width - string_length string));
+          output_string oc margin;
+          output_string oc close_comment;
+          output_char oc '\n';
+          string
+        ) "" header
+    in
+    if last <> "" then begin
       output_string oc open_comment;
-      output_string oc margin;
-      output_string oc string;
-      output_substring oc white 0 (max 0 (real_width - string_length string));
-      output_string oc margin;
+      output_string oc white;
       output_string oc close_comment;
-      output_char oc '\n'
-    ) header;
-
+      output_char oc '\n';
+    end;
     Printf.fprintf oc "%s%s%s\n\n" open_comment line close_comment
   in
 
@@ -157,12 +164,12 @@ let make_frame ~open_comment ~close_comment ~line_char ~margin ~width =
 
 let _ =
   add "frame" begin function args ->
-	make_frame
-	  ~open_comment:(arg_string args "open")
-	  ~close_comment:(arg_string args "close")
-	  ~line_char:(arg_char args "line")
-	  ~margin:(arg_string args ~default:"  " "margin")
-	  ~width:(arg_int args ~default:"68" "width")
+    make_frame
+      ~open_comment:(arg_string args "open")
+      ~close_comment:(arg_string args "close")
+      ~line_char:(arg_char args "line")
+      ~margin:(arg_string args ~default:"  " "margin")
+      ~width:(arg_int args ~default:"68" "width")
   end
 
 
@@ -186,17 +193,17 @@ let make_lines ~open_comment ~close_comment ~line_char ~begin_line
       let line = input_line ic in
       if Str.string_match regexp_begin line 0
       then begin
-	while
+        while
           let s = input_line ic in
-	  let b =
+          let b =
             not (Str.string_match regexp_end s
                    (max 0 (string_length s - end_length))) in
-	  if b then
-           Format.printf "%s@." s;
-	  b
-	  
+          if b then
+            Format.printf "%s@." s;
+          b
+
         do () done;
-	()
+        ()
       end
     with End_of_file -> 
       ()
@@ -207,12 +214,12 @@ let make_lines ~open_comment ~close_comment ~line_char ~begin_line
       let line = input_line ic in
       if Str.string_match regexp_begin line 0
       then begin
-	while
+        while
           let s = input_line ic in
-            not (Str.string_match regexp_end s
-                   (max 0 (string_length s - end_length)))
+          not (Str.string_match regexp_end s
+                 (max 0 (string_length s - end_length)))
         do () done;
-	""
+        ""
       end
       else if Str.string_match regexp_blank line 0
       then ""
@@ -227,15 +234,15 @@ let make_lines ~open_comment ~close_comment ~line_char ~begin_line
       (String.make (max 0 (real_width - String.length open_comment)) line_char);
 
     List.iter (function string ->
-      output_string oc begin_line;
-      output_string oc string;
-      output_char oc '\n'
-    ) header;
+        output_string oc begin_line;
+        output_string oc string;
+        output_char oc '\n'
+      ) header;
 
     Printf.fprintf oc "%s%s%s\n\n"
       begin_last
       (String.make (max 0 (real_width - String.length begin_last
-			     - String.length close_comment)) line_char)
+                           - String.length close_comment)) line_char)
       close_comment;
 
   in
@@ -247,13 +254,13 @@ let make_lines ~open_comment ~close_comment ~line_char ~begin_line
 
 let _ =
   add "lines" begin function args ->
-	make_lines
-	  ~open_comment:(arg_string args "open")
-	  ~close_comment:(arg_string args "close")
-	  ~line_char:(arg_char args "line")
-	  ~begin_line:(arg_string args ~default:"  " "begin")
-	  ~begin_last:(arg_string args ~default:"" "last")
-	  ~width:(arg_int args ~default:"70" "width")
+    make_lines
+      ~open_comment:(arg_string args "open")
+      ~close_comment:(arg_string args "close")
+      ~line_char:(arg_char args "line")
+      ~begin_line:(arg_string args ~default:"  " "begin")
+      ~begin_last:(arg_string args ~default:"" "last")
+      ~width:(arg_int args ~default:"70" "width")
   end
 
 
