@@ -73,28 +73,27 @@ more information.
 % *************************************************************************
 \section{Compilation and installation}
 
-Building \headache{} requires \emph{Objective Caml} (version 3.06 or up,
-available at \url{http://caml.inria.fr/}) and \emph{GNU Make}.
+Building \headache{} requires \emph{Objective Caml} (available at
+\url{http://caml.inria.fr/}) and \emph{GNU Make}.
 In addition, from version \texttt{1.03-utf8}, the build requires the Unicode library \emph{Camomile} and, from version \texttt{1.04}, \emph{Dune}.
 
 \paragraph{Instructions}
+
+\headache{} is available through \emph{OPAM} (available at
+\url{http://opam.ocaml.org/}), the \emph{OCaml Package Manager}.
+This is the preferred installation method.
+Then the following sequence of commands should install the package:
+\begin{alltt}
+  opam init
+  opam install headache
+\end{alltt}
+
+Alternatively, you can use these commands (\emph{Dune} must be installed):
 
 \begin{alltt}
   make && sudo make INSTALLDIR=/usr/local/bin install
 \end{alltt}
 Build the executable and install it into the specified directory.
-
-\headache{} is available through \emph{OPAM} (available at
-\url{http://opam.ocaml.org/}), the \emph{OCaml Package Manager}.
-This is the preferred installation method.
-Be sure to install opam v1.2 or higher.
-Then the following sequence of commands should install the package:
-\begin{alltt}
-  opam init
-  opam install depext
-  opam depext headache
-  opam install headache
-\end{alltt}
 
 % *************************************************************************
 \section{Usage}

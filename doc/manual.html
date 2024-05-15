@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<meta name="generator" content="hevea 2.35">
+<meta name="generator" content="hevea 2.36">
 <style type="text/css">
 .equationcontainer{position:relative;}
 .equationnumber{float:right;left:auto;position:absolute;right:0}
@@ -81,8 +81,7 @@ text-indent: 0;
 short header giving, for instance, some copyright informations.
 &#X2018;<span style="font-family:monospace">headache</span>&#X2018; is a simple and lightweight tool for managing easily these
 headers. Among its functionalities, one may mention:
-</p><ul class="itemize"><li class="li-itemize">
-Headers must generally be generated as <em>comments</em> in source
+</p><ul class="itemize"><li class="li-itemize">Headers must generally be generated as <em>comments</em> in source
 code files. &#X2018;<span style="font-family:monospace">headache</span>&#X2018; deals with different file types and generates
 for each of them headers in an appropriate format.
 </li><li class="li-itemize">&#X2018;<span style="font-family:monospace">headache</span>&#X2018; automatically detects existing headers and removes them.
@@ -91,24 +90,21 @@ Thus, you can use it to update headers in a set of files.
 Public License</em>. See file &#X2018;<span style="font-family:monospace">LICENSE</span>&#X2018; of the distribution for
 more information.</p>
 <!--TOC section id="sec2" Compilation and installation-->
-<h2 id="sec2" class="section">2&#X2003;Compilation and installation</h2><!--SEC END --><p>Building &#X2018;<span style="font-family:monospace">headache</span>&#X2018; requires <em>Objective Caml</em> (version 3.06 or up,
-available at <span style="font-family:monospace">http://caml.inria.fr/</span>) and <em>GNU Make</em>.
+<h2 id="sec2" class="section">2&#X2003;Compilation and installation</h2><!--SEC END --><p>Building &#X2018;<span style="font-family:monospace">headache</span>&#X2018; requires <em>Objective Caml</em> (available at
+<span style="font-family:monospace">http://caml.inria.fr/</span>) and <em>GNU Make</em>.
 In addition, from version <span style="font-family:monospace">1.03-utf8</span>, the build requires the Unicode library <em>Camomile</em> and, from version <span style="font-family:monospace">1.04</span>, <em>Dune</em>.</p>
 <!--TOC paragraph id="sec3" Instructions-->
-<h4 id="sec3" class="paragraph">Instructions</h4><!--SEC END --><pre>
-  make &amp;&amp; sudo make INSTALLDIR=/usr/local/bin install
-</pre><p>
-Build the executable and install it into the specified directory.</p><p>&#X2018;<span style="font-family:monospace">headache</span>&#X2018; is available through <em>OPAM</em> (available at
+<h4 id="sec3" class="paragraph">Instructions</h4><!--SEC END --><p>&#X2018;<span style="font-family:monospace">headache</span>&#X2018; is available through <em>OPAM</em> (available at
 <span style="font-family:monospace">http://opam.ocaml.org/</span>), the <em>OCaml Package Manager</em>.
 This is the preferred installation method.
-Be sure to install opam v1.2 or higher.
 Then the following sequence of commands should install the package:
 </p><pre>
   opam init
-  opam install depext
-  opam depext headache
   opam install headache
-</pre>
+</pre><p>Alternatively, you can use these commands (<em>Dune</em> must be installed):</p><pre>
+  make &amp;&amp; sudo make INSTALLDIR=/usr/local/bin install
+</pre><p>
+Build the executable and install it into the specified directory.</p>
 <!--TOC section id="sec4" Usage-->
 <h2 id="sec4" class="section">3&#X2003;Usage</h2><!--SEC END --><p>Let us illustrate the use of this tool with a small example. Assume
 you have a small project mixing C and Caml code consisting in three
@@ -116,7 +112,7 @@ files &#X2018;<span style="font-family:monospace">foo.c</span>&#X2018;, &#X2018;
 equip them with some header. First of all, write a <em>header
 file</em>, i.e. a plain text file including the information headers
 must mention. An example of such a file is given in
-figure&#X2004;&#X200D;<a href="#figure%3Aheader">1</a>. In the following, we assume this file is
+figure&#XA0;<a href="#figure%3Aheader">1</a>. In the following, we assume this file is
 named &#X2018;<span style="font-family:monospace">myheader</span>&#X2018; and is in the same directory as source files.</p><p>Then, in order to generate headers, just run the command:
 </p><pre>
   headache -h myheader foo.c bar.ml bar.mli
@@ -159,17 +155,16 @@ Vincent.Simonet@inria.fr           http://cristal.inria.fr/~simonet/
 <!--TOC section id="sec5" Configuration file-->
 <h2 id="sec5" class="section">4&#X2003;Configuration file</h2><!--SEC END --><p>File types and format of header may be specified by a
 <em>configuration file</em>. By default, the default builtin
-configuration file given in figure&#X2004;&#X200D;<a href="#figure%3Aconfig">2</a> is used. You
+configuration file given in figure&#XA0;<a href="#figure%3Aconfig">2</a> is used. You
 can also use your own configuration file thanks to the &#X2018;<span style="font-family:monospace">-c</span>&#X2018;
 option:
 </p><pre>
   headache -c myconfig -h myheader foo.c bar.ml bar.mli
 </pre><p>In order to write your own configuration, you can follow the example
-given in figure&#X2004;&#X200D;<a href="#figure%3Aconfig">2</a>. A configuration file consists in
+given in figure&#XA0;<a href="#figure%3Aconfig">2</a>. A configuration file consists in
 a list of <em>entries</em> separated by the character &#X2018;<span style="font-family:monospace">|</span>&#X2018;. Each
 of them is made of two parts separated by an &#X2018;<span style="font-family:monospace">-&gt;</span>&#X2018;:
-</p><ul class="itemize"><li class="li-itemize">
-The first one is a <em>regular expression</em>. Regular
+</p><ul class="itemize"><li class="li-itemize">The first one is a <em>regular expression</em>. Regular
 expression are enclosed within double quotes and have the same
 syntax as in Gnu Emacs. &#X2018;<span style="font-family:monospace">headache</span>&#X2018; determines file types according to
 file basenames; thus, each file is dealt with using the first line
@@ -181,8 +176,7 @@ are named: &#X2018;<span style="font-family:monospace">open:"(*"</span>&#X2018; 
 &#X2018;<span style="font-family:monospace">open</span>&#X2018; is &#X2018;<span style="font-family:monospace">(*</span>&#X2018;.
 </li></ul><p>
 &#X2018;<span style="font-family:monospace">headache</span>&#X2018; currently supports three <em>models</em>:
-</p><ul class="itemize"><li class="li-itemize">
-&#X2018;<span style="font-family:monospace">frame</span>&#X2018;. With this model, headers are generated in a
+</p><ul class="itemize"><li class="li-itemize">&#X2018;<span style="font-family:monospace">frame</span>&#X2018;. With this model, headers are generated in a
 frame. This model requires three arguments: &#X2018;<span style="font-family:monospace">open</span>&#X2018; and
 &#X2018;<span style="font-family:monospace">close</span>&#X2018; (the opening and closing sequences for comments) and
 &#X2018;<span style="font-family:monospace">line</span>&#X2018; (the character used to make the horizontal lines of the
@@ -224,8 +218,7 @@ present in the source distribution before building the software.</p><blockquote 
 specify when the initial lines of the processed file have to be skipped.
 As previously, these <em>entries</em> are separated by the character &#X2018;<span style="font-family:monospace">|</span>&#X2018;
 and each of them is made of two parts separated by an &#X2018;<span style="font-family:monospace">-&gt;</span>&#X2018;:
-</p><ul class="itemize"><li class="li-itemize">
-Again, the first part is a <em>regular expression</em> used by &#X2018;<span style="font-family:monospace">headache</span>&#X2018;
+</p><ul class="itemize"><li class="li-itemize">Again, the first part is a <em>regular expression</em> used by &#X2018;<span style="font-family:monospace">headache</span>&#X2018;
 to determine the file type. But here, it is according to
 its full filename (including the pathname).
 </li><li class="li-itemize">The second part specifies when the initial lines must be skipped.
@@ -244,7 +237,7 @@ if nothing matches, &#X2018;<span style="font-family:monospace">headache</span>&
 <div class="caption"><table style="border-spacing:6px;border-collapse:separate;" class="cellpading0"><tr><td style="vertical-align:top;text-align:left;" >Figure 3: Example of a configuration file for skipping the shebang line of shell scripts</td></tr>
 </table></div>
 <a id="figure:example"></a>
-<div class="center"><hr class="floatrule"></div></blockquote><p>Figure&#X2004;&#X200D;<a href="#figure%3Aexample">3</a> shows an example of configuration file
+<div class="center"><hr class="floatrule"></div></blockquote><p>Figure&#XA0;<a href="#figure%3Aexample">3</a> shows an example of configuration file
 that can used to skip the shebang line of shell scripts:
 when the first line of &#X2018;<span style="font-family:monospace">.sh</span>&#X2018; files starts with &#X2018;<span style="font-family:monospace">#!</span>&#X2018;,
 &#X2018;<span style="font-family:monospace">headache</span>&#X2018; does not modify that line and considers that the header must
@@ -258,7 +251,7 @@ start at the second line.</p><blockquote class="figure"><div class="center"><hr 
 as well as lines containing Prolog directives, such as Unicode usage.</td></tr>
 </table></div>
 <a id="figure:python-example"></a>
-<div class="center"><hr class="floatrule"></div></blockquote><p>Figure&#X2004;&#X200D;<a href="#figure%3Apython-example">4</a> shows an example of configuration file
+<div class="center"><hr class="floatrule"></div></blockquote><p>Figure&#XA0;<a href="#figure%3Apython-example">4</a> shows an example of configuration file
 that can used for &#X2018;<span style="font-family:monospace">SWI prolog</span>&#X2018; files:
 for a &#X2018;<span style="font-family:monospace">.pl</span>&#X2018; file starting with the following three first lines,
 &#X2018;<span style="font-family:monospace">headache</span>&#X2018; considers that the header must start just after the first two lines:
